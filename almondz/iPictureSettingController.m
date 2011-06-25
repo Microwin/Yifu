@@ -125,7 +125,7 @@ static NSString *kCategory = nil;   //通知传过来的category
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -135,6 +135,8 @@ static NSString *kCategory = nil;   //通知传过来的category
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //注册为通知观察者
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCategory:) name:@"CategoryTyped" object:nil];
 }
 
 - (void)viewDidUnload
