@@ -98,7 +98,10 @@ static NSString *kCategory = nil;   //通知传过来的category
 }
 
 -(void)storeSelectedImage:(NSArray *)imageArray withCategory: (NSString *)category {
-    
+    if ([category isEqualToString:@""]) {
+        return;
+    }
+    NSLog(@"CAT:%@", category);
     NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), category];
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     
@@ -106,15 +109,12 @@ static NSString *kCategory = nil;   //通知传过来的category
  
 
     for (UIImage *image in imageArray) {
-//        NSLog(@"is?:%d", [image isKindOfClass:[UIImage class]]);
         NSString *name = [NSString stringWithFormat:@"%d.png", sum];
         NSData *imgData = UIImagePNGRepresentation(image);
         [imgData writeToFile:[NSString stringWithFormat:@"%@/%@", path, name] atomically:YES];
         sum++;
     }
     kCategory = nil;
-     
-
     
 }
 

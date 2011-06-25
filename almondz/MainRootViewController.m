@@ -152,11 +152,14 @@
 {
     
         if (indexPath.row == 1) {
-        [_tableView deselectRowAtIndexPath:indexPath animated:YES];
-//        [self showiPictureViewController:nil];
-        iPictureRootViewController *rootViewController = [[iPictureRootViewController alloc] init];
-        [self.navigationController pushViewController:rootViewController animated:YES]; 
-        [rootViewController release];
+        //the style before using tabbar between exploring picture and setting
+//        [_tableView deselectRowAtIndexPath:indexPath animated:YES];
+//        iPictureRootViewController *rootViewController = [[iPictureRootViewController alloc] init];
+//        [self.navigationController pushViewController:rootViewController animated:YES]; 
+//        [rootViewController release];
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"iPictureTabbarViewController" owner:self options:nil];
+        UITabBarController *tabBar = [array objectAtIndex:0];
+        [self.navigationController pushViewController:tabBar animated:YES];
     }
 }
 

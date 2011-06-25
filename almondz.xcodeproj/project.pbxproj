@@ -81,6 +81,7 @@
 		4196459D1377720C00FBB64D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4196459C1377720C00FBB64D /* QuartzCore.framework */; };
 		41A34B2813913F9C00715CB4 /* iPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A34B2613913F9C00715CB4 /* iPictureViewController.m */; };
 		41A34B2913913F9C00715CB4 /* iPictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A34B2713913F9C00715CB4 /* iPictureViewController.xib */; };
+		41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,6 +175,7 @@
 		41A34B2513913F9C00715CB4 /* iPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPictureViewController.h; sourceTree = "<group>"; };
 		41A34B2613913F9C00715CB4 /* iPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPictureViewController.m; sourceTree = "<group>"; };
 		41A34B2713913F9C00715CB4 /* iPictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureViewController.xib; sourceTree = "<group>"; };
+		41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureTabbarViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +247,7 @@
 		4120C49E13B42C1700E8A553 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
+				41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */,
 				41665E8713AA5A0B00E73416 /* MyTabbar.h */,
 				41665E8813AA5A0B00E73416 /* MyTabbar.m */,
 			);
@@ -502,6 +505,7 @@
 				4120C4B113B42DC000E8A553 /* DarkBackground.png in Resources */,
 				4120C4B213B42DC000E8A553 /* LightBackground.png in Resources */,
 				4120C4BF13B4AC6900E8A553 /* DialogView.xib in Resources */,
+				41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
