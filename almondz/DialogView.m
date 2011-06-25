@@ -48,6 +48,9 @@
 //    }
 //    else 
 //        [_categoryArray removeAllObjects];
+    [_textField resignFirstResponder];
+    [_detailTextField resignFirstResponder];
+    
     NSString *path = [NSString stringWithFormat:@"%@/Documents", NSHomeDirectory()];
     _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] copy];
     [_pickerView reloadAllComponents];
