@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class ToolView;
 @interface iPictureViewController : UIViewController <UIScrollViewDelegate> {
     UIScrollView *scrollView;
     NSArray *_plistData;
     NSString *_category;
+    
+    ToolView *_toolView;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
