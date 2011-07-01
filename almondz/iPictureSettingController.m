@@ -32,7 +32,7 @@ static NSString *kCategory = nil;   //通知传过来的category
 }
 
 - (IBAction)categorySetting:(id)sender {
-    CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] init];
+    CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:categoryTableViewController animated:YES];
     [categoryTableViewController release];
 }

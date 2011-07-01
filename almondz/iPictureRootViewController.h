@@ -11,11 +11,11 @@
 
 @interface iPictureRootViewController : UITableViewController {
     
-    NSArray *_categoryArray;
+    NSMutableArray *_categoryArray;
     NSDictionary *_plistKey;
 }
 
-@property (nonatomic, retain) NSArray *categoryArray;
+//@property (nonatomic, retain) NSArray *categoryArray;
 @property (nonatomic, retain) NSDictionary *plistKey;
 
 

@@ -8,7 +8,9 @@
 
 #import "CategoryTableViewController.h"
 #import "CategoryEditViewController.h"
-
+@interface CategoryTableViewController ()
+- (void)addButtonPressed;
+@end
 @implementation CategoryTableViewController
 
 static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
@@ -19,6 +21,7 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
     if (self) {
         // Custom initialization
         _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
+//        _categoryArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -47,7 +50,9 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *plusBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonPressed)];
+     self.navigationItem.rightBarButtonItem = plusBtn;
+    [plusBtn release];
 }
 
 - (void)viewDidUnload
@@ -61,6 +66,14 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
 {
     [super viewWillAppear:animated];
     [self.navigationItem setTitle:@"分类设置"];
+    if ([_categoryArray count] > 0) {
+        [_categoryArray removeAllObjects];
+        _categoryArray = nil;
+        [_categoryArray release];
+        _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
+        [self.tableView reloadData];
+    }
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -174,6 +187,13 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
     
 }
 
+- (void)addButtonPressed {
+    CategoryEditViewController *editView = [[CategoryEditViewController alloc] initWithNibName:@"CategoryEditViewController" bundle:[NSBundle mainBundle]];
+    editView.isRename = NO;
+    [self.navigationController pushViewController:editView animated:YES];
+    [editView release];
+}
+
 #pragma mark - Category Table Cell Delegate
 
 - (void)deleteCategoryWithIndexPath:(NSIndexPath *)indexPath {
@@ -186,7 +206,12 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
 }
 
 - (void)renameCategoryWithIndexPath:(NSIndexPath *)indexPath {
-
+    CategoryEditViewController *editView = [[CategoryEditViewController alloc] initWithNibName:@"CategoryEditViewController" bundle:[NSBundle mainBundle]];
+    editView.isRename = YES;
+    editView.oldCategory = ((CategoryTableCell *)[self.tableView cellForRowAtIndexPath:indexPath]).categoryLabel.text;
+    [self.navigationController pushViewController:editView animated:YES];
+    [editView release];
+    
 }
 
 #pragma mark - Alert Delegate

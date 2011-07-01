@@ -13,7 +13,7 @@
 
 @implementation iPictureRootViewController
 
-@synthesize categoryArray = _categoryArray;
+//@synthesize categoryArray = _categoryArray;
 @synthesize plistKey = _plistKey;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -54,6 +54,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
     
     
     self.tableView.rowHeight = 60;  //根据类别数量配置行高
@@ -79,8 +80,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSString *path = [NSString stringWithFormat:@"%@/Documents", NSHomeDirectory()];
-    _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] copy];
+//    NSString *path = [NSString stringWithFormat:@"%@/Documents", NSHomeDirectory()];
+//    _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] copy];
+    
+    if ([_categoryArray count] > 0) {
+        [_categoryArray removeAllObjects];
+        _categoryArray = nil;
+        [_categoryArray release];
+        _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
+        [self.tableView reloadData];
+    }
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
 
