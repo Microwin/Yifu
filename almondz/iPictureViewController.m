@@ -54,9 +54,13 @@ static NSMutableArray *kImages = nil;
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
     if (_toolView.alpha == 0.f) {
         _toolView.alpha = 1.f;
+        self.navigationController.navigationBarHidden = NO;
     }
-    else
+    else {
         _toolView.alpha = 0.f;
+        self.navigationController.navigationBarHidden = YES;
+
+    }
     [UIView commitAnimations];
 }
 
@@ -88,9 +92,9 @@ static NSMutableArray *kImages = nil;
 //    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:3.f target:self selector:@selector(hideAndShowToolView) userInfo:nil repeats:YES];
 //    [time fire];
     
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideAndShowToolView)];
-//    [self.view addGestureRecognizer:tap];
-//    [tap release];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideAndShowToolView)];
+    [self.scrollView addGestureRecognizer:tap];
+    [tap release];
     kImages = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [_plistData count]; i++) {
@@ -117,7 +121,7 @@ static NSMutableArray *kImages = nil;
     
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
     _toolView = [array objectAtIndex:0];
-    _toolView.center = CGPointMake(160, 320);
+    _toolView.center = CGPointMake(160, 400);
     _toolView.delegate = self;
     [self.view addSubview:_toolView];
 }
@@ -129,6 +133,18 @@ static NSMutableArray *kImages = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [self.navigationItem setTitle:_category];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -155,6 +171,7 @@ static NSMutableArray *kImages = nil;
 - (void)sendMail:(id)sender{
     
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.navigationBar.barStyle = UIBarStyleBlackOpaque;
     picker.mailComposeDelegate = self;
     [picker setSubject:[NSString stringWithFormat:@"分享照片"]];
     
