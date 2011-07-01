@@ -90,6 +90,12 @@
         _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
         [self.tableView reloadData];
     }
+    else {
+        _categoryArray = nil;
+        [_categoryArray release];
+        _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
+        [self.tableView reloadData];
+    }
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
 
