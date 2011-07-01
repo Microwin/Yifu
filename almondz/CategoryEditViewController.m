@@ -42,7 +42,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationItem setTitle:@"修改分类名"];
+    if (isRename) {
+        [self.navigationItem setTitle:@"修改分类名"];
+    }
+    else
+        [self.navigationItem setTitle:@"设置分类名"];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
