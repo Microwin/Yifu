@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
+#import "ToolView.h"
 
-@class ToolView;
-@interface iPictureViewController : UIViewController <UIScrollViewDelegate> {
+@interface iPictureViewController : UIViewController <UIScrollViewDelegate ,MFMailComposeViewControllerDelegate, ToolViewDelegate, UIAlertViewDelegate> {
     UIScrollView *scrollView;
     NSArray *_plistData;
     NSString *_category;
     
     ToolView *_toolView;
+//    NSArray *_nameArray;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;

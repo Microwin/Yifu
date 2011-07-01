@@ -24,6 +24,7 @@
 @property (nonatomic, retain) IBOutlet UIView *bottomView;
 
 - (IBAction)topButtonPressed:(id)sender;
-
+- (IBAction)deleteButtonPressed:(id)sender;
+- (IBAction)shareButtonPressed:(id)sender;
 
 @end

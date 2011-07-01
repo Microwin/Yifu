@@ -11,6 +11,8 @@
 #import "ELCAlbumPickerController.h"
 #import "DialogView.h"
 #import "CategoryTableViewController.h"
+#import "Hash.h"
+
 @implementation iPictureSettingController
 
 @synthesize selectedImage = _selectedImage;
@@ -114,10 +116,21 @@ static NSString *kCategory = nil;   //通知传过来的category
     int sum = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] count];
  
 
-    for (UIImage *image in imageArray) {
-        NSString *name = [NSString stringWithFormat:@"%d.png", sum];
+//    for (UIImage *image in imageArray) {
+//        NSString *date = [[NSDate date] description];
+//        NSString *name = [Hash md5:date];
+////        NSString *name = [NSString stringWithFormat:@"%d.png", sum];
+//        NSData *imgData = UIImagePNGRepresentation(image);
+//        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
+//        sum++;
+//    }
+    for (int i = 0; i < [imageArray count]; i++) {
+        UIImage *image = [imageArray objectAtIndex:i];
+        NSString *date = [NSString stringWithFormat:@"%@%d", [[NSDate date] description], i];
+        NSString *name = [Hash md5:date];
+        //        NSString *name = [NSString stringWithFormat:@"%d.png", sum];
         NSData *imgData = UIImagePNGRepresentation(image);
-        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@", path, name] atomically:YES];
+        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
         sum++;
     }
     kCategory = nil;

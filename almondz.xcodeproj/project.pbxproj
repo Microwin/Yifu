@@ -82,6 +82,8 @@
 		41A34B2813913F9C00715CB4 /* iPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A34B2613913F9C00715CB4 /* iPictureViewController.m */; };
 		41A34B2913913F9C00715CB4 /* iPictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A34B2713913F9C00715CB4 /* iPictureViewController.xib */; };
 		41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */; };
+		A9473CDA13BDD01D00B905E6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9473CD913BDD01D00B905E6 /* MessageUI.framework */; };
+		A9473CE613BDF15900B905E6 /* Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = A9473CE513BDF15900B905E6 /* Hash.m */; };
 		A98DB83F13BD84E10022FA22 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB83E13BD84E10022FA22 /* CategoryTableViewController.m */; };
 		A98DB84213BD84F80022FA22 /* CategoryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB84113BD84F80022FA22 /* CategoryTableCell.m */; };
 		A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB84413BD85130022FA22 /* CategoryEditViewController.m */; };
@@ -183,6 +185,9 @@
 		41A34B2613913F9C00715CB4 /* iPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPictureViewController.m; sourceTree = "<group>"; };
 		41A34B2713913F9C00715CB4 /* iPictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureViewController.xib; sourceTree = "<group>"; };
 		41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureTabbarViewController.xib; sourceTree = "<group>"; };
+		A9473CD913BDD01D00B905E6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		A9473CE413BDF15900B905E6 /* Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
+		A9473CE513BDF15900B905E6 /* Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hash.m; sourceTree = "<group>"; };
 		A98DB83D13BD84E10022FA22 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
 		A98DB83E13BD84E10022FA22 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
 		A98DB84013BD84F80022FA22 /* CategoryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableCell.h; sourceTree = "<group>"; };
@@ -201,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9473CDA13BDD01D00B905E6 /* MessageUI.framework in Frameworks */,
 				4120C46313B416E300E8A553 /* AssetsLibrary.framework in Frameworks */,
 				4196459D1377720C00FBB64D /* QuartzCore.framework in Frameworks */,
 				4196452A137768BD00FBB64D /* UIKit.framework in Frameworks */,
@@ -301,6 +307,7 @@
 		41964528137768BD00FBB64D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9473CD913BDD01D00B905E6 /* MessageUI.framework */,
 				4120C46213B416E300E8A553 /* AssetsLibrary.framework */,
 				4196459C1377720C00FBB64D /* QuartzCore.framework */,
 				41964529137768BD00FBB64D /* UIKit.framework */,
@@ -313,6 +320,8 @@
 		4196452F137768BD00FBB64D /* almondz */ = {
 			isa = PBXGroup;
 			children = (
+				A9473CE413BDF15900B905E6 /* Hash.h */,
+				A9473CE513BDF15900B905E6 /* Hash.m */,
 				A9C1629413BCB12500F235F5 /* View */,
 				4120C48013B417B200E8A553 /* ThirdPart */,
 				419645A21377798D00FBB64D /* iPictureSection */,
@@ -582,6 +591,7 @@
 				A98DB83F13BD84E10022FA22 /* CategoryTableViewController.m in Sources */,
 				A98DB84213BD84F80022FA22 /* CategoryTableCell.m in Sources */,
 				A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */,
+				A9473CE613BDF15900B905E6 /* Hash.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

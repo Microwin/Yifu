@@ -76,4 +76,12 @@
     }
     [UIView commitAnimations];
 }
+
+- (IBAction)shareButtonPressed:(id)sender {
+    [delegate sharePicture];
+}
+
+- (IBAction)deleteButtonPressed:(id)sender {
+    [delegate deletePicture];
+}
 @end

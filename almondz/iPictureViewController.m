@@ -7,12 +7,17 @@
 //
 
 #import "iPictureViewController.h"
-#import "ToolView.h"
 
 @implementation iPictureViewController
 @synthesize scrollView;
 @synthesize plistData = _plistData;
 @synthesize category = _category;
+
+static NSMutableArray *kImages = nil;
+
+- (NSString *)currentPath {
+    return [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +33,7 @@
     [scrollView release];
 //    [_plistData release];
     [_category release];
+    [kImages release];
     [super dealloc];
     
 }
@@ -77,12 +83,15 @@
 //        [self.scrollView addSubview:subview];
 //    }
 //    [subview release];
-    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:3.f target:self selector:@selector(hideAndShowToolView) userInfo:nil repeats:YES];
-    [time fire];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideAndShowToolView)];
-    [self.view addGestureRecognizer:tap];
-    [tap release];
+    
+//    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:3.f target:self selector:@selector(hideAndShowToolView) userInfo:nil repeats:YES];
+//    [time fire];
+    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideAndShowToolView)];
+//    [self.view addGestureRecognizer:tap];
+//    [tap release];
+    kImages = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [_plistData count]; i++) {
         CGRect frame;
@@ -90,11 +99,17 @@
         frame.origin.y = 0;
         frame.size = self.scrollView.frame.size;
         
-        UIImageView *subview = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%d.png", path, i]]];
-
+        NSString *path = [NSString stringWithFormat:@"%@/%@", [self currentPath], [_plistData objectAtIndex:i]];
+        UIImageView *subview = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
+//        subview.tag = i + 1;
         
         subview.frame = frame;
-        [self.scrollView addSubview:subview];
+
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:subview, @"imageView", path, @"path", nil];
+        
+        NSLog(@"Path:%@", [dic valueForKey:@"path"]);
+        [kImages addObject:dic];
+        [self.scrollView addSubview:[[kImages objectAtIndex:i] valueForKey:@"imageView"]];
         [subview release];
     }
     
@@ -103,12 +118,14 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
     _toolView = [array objectAtIndex:0];
     _toolView.center = CGPointMake(160, 320);
+    _toolView.delegate = self;
     [self.view addSubview:_toolView];
 }
 
 - (void)viewDidUnload
 {
     self.scrollView = nil;
+    kImages = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -120,4 +137,80 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//当前页面的图片
+- (UIImage *)currentImage {
+    CGPoint point = self.scrollView.contentOffset;
+    NSUInteger page = point.x / 320;
+    NSLog(@"x:%f, y:%f", point.x, point.y);
+    UIImage *theImage = ((UIImageView *)[[kImages objectAtIndex:page] valueForKey:@"imageView"]).image;
+    return theImage;
+}
+//当前是第几页
+- (NSUInteger)currentPage {
+    CGPoint point = self.scrollView.contentOffset;
+    NSUInteger page = point.x / 320;
+    return page;
+}
+#pragma mark - Mail Delegate
+- (void)sendMail:(id)sender{
+    
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+    [picker setSubject:[NSString stringWithFormat:@"分享照片"]];
+    
+    [picker setMessageBody:@"I share you this nice image from iFashion." isHTML:NO];
+    
+
+    [picker addAttachmentData:UIImagePNGRepresentation([self currentImage]) mimeType:@"png" fileName:@"SharePicture"];
+    picker.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:picker animated:YES];
+    [picker release];
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
+{	
+    
+	[self dismissModalViewControllerAnimated:YES];
+}
+
+
+
+
+#pragma mark - ToolView Delegate
+- (void)sharePicture {
+    [self sendMail:nil];
+}
+
+- (void)deletePicture {
+//    NSString *str = [NSString stringWithFormat:@"%@/%d.png", [self currentPath], [self currentPage]];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除图片" message:@"确认要删除这张图片吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+    [alert release];
+
+}
+
+#pragma mark - Alert Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSString *str = [[kImages objectAtIndex:[self currentPage]] valueForKey:@"path"];
+        NSLog(@"PATH:%@", str);
+        [[NSFileManager defaultManager] removeItemAtPath:str error:nil];
+        
+        
+        for (int i = [self currentPage] + 1; i < [kImages count]; i++) {
+            UIImageView *imgV = [[kImages objectAtIndex:i] valueForKey:@"imageView"];
+            CGRect rect = imgV.frame;
+            rect.origin.x -= 320;
+            imgV.frame = rect;
+        }
+        
+        CGSize size = self.scrollView.contentSize;
+        size.width -= 320;
+        self.scrollView.contentSize = size;
+        
+        [[[kImages objectAtIndex:[self currentPage]] valueForKey:@"imageView"] removeFromSuperview];
+        [kImages removeObjectAtIndex:[self currentPage]];
+    }
+}
 @end
