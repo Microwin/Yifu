@@ -200,6 +200,9 @@ static NSMutableArray *kImages = nil;
 }
 
 - (void)deletePicture {
+    if ([kImages count] == 0) {
+        return;
+    }
 //    NSString *str = [NSString stringWithFormat:@"%@/%d.png", [self currentPath], [self currentPage]];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除图片" message:@"确认要删除这张图片吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
@@ -210,6 +213,7 @@ static NSMutableArray *kImages = nil;
 #pragma mark - Alert Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+
         CGContextRef context = UIGraphicsGetCurrentContext();
         [UIView beginAnimations:nil context:context];
         [UIView setAnimationDuration:.3f];
@@ -219,20 +223,35 @@ static NSMutableArray *kImages = nil;
         NSString *str = [[kImages objectAtIndex:[self currentPage]] valueForKey:@"path"];
         NSLog(@"PATH:%@", str);
         [[NSFileManager defaultManager] removeItemAtPath:str error:nil];
-        
-        
-        for (int i = [self currentPage] + 1; i < [kImages count]; i++) {
-            UIImageView *imgV = [[kImages objectAtIndex:i] valueForKey:@"imageView"];
-            CGRect rect = imgV.frame;
-            rect.origin.x -= 320;
-            imgV.frame = rect;
-        }
-        
-        CGSize size = self.scrollView.contentSize;
-        size.width -= 320;
-        self.scrollView.contentSize = size;
-        
         [[[kImages objectAtIndex:[self currentPage]] valueForKey:@"imageView"] removeFromSuperview];
+        //如果不是最后一张图片
+        if ([kImages count] != ([self currentPage] + 1)) {
+            for (int i = [self currentPage] + 1; i < [kImages count]; i++) {
+                UIImageView *imgV = [[kImages objectAtIndex:i] valueForKey:@"imageView"];
+                CGRect rect = imgV.frame;
+                rect.origin.x -= 320;
+                imgV.frame = rect;
+            }
+            
+            CGSize size = self.scrollView.contentSize;
+            size.width -= 320;
+            self.scrollView.contentSize = size;
+        }
+        //如果只有一张图片
+        else if ([kImages count] == 1) {
+            CGSize size = CGSizeMake(320, 480);
+            self.scrollView.contentSize = size;
+        }
+        //如果是排在最后的一张图片
+        else {
+            CGSize size = self.scrollView.contentSize;
+            size.width -= 320;
+//            [self.scrollView scrollRectToVisible:CGRectMake(size.width, 0, 320, 480) animated:YES];
+            self.scrollView.contentSize = size;
+        }
+
+        
+
         [kImages removeObjectAtIndex:[self currentPage]];
         [UIView commitAnimations];
 
