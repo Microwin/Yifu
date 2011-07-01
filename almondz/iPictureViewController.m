@@ -105,10 +105,11 @@ static NSMutableArray *kImages = nil;
         
         NSString *path = [NSString stringWithFormat:@"%@/%@", [self currentPath], [_plistData objectAtIndex:i]];
         UIImageView *subview = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
-//        subview.tag = i + 1;
+        [subview setContentMode:UIViewContentModeScaleAspectFit];
+        //        subview.tag = i + 1;
         
         subview.frame = frame;
-
+        
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:subview, @"imageView", path, @"path", nil];
         
         NSLog(@"Path:%@", [dic valueForKey:@"path"]);
