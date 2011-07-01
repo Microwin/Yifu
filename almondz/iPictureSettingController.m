@@ -10,14 +10,14 @@
 #import "ELCImagePickerController.h"
 #import "ELCAlbumPickerController.h"
 #import "DialogView.h"
+#import "CategoryTableViewController.h"
 @implementation iPictureSettingController
 
 @synthesize selectedImage = _selectedImage;
 
 static NSString *kCategory = nil;   //通知传过来的category
 
--(IBAction)launchController {
-	
+- (IBAction)launchImagerImporter:(id)sender {	
     ELCAlbumPickerController *albumController = [[ELCAlbumPickerController alloc] initWithNibName:@"ELCAlbumPickerController" bundle:[NSBundle mainBundle]];  
     
 	ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initWithRootViewController:albumController];
@@ -29,6 +29,12 @@ static NSString *kCategory = nil;   //通知传过来的category
 	[self presentModalViewController:elcPicker animated:YES];
     [elcPicker release];
     [albumController release];
+}
+
+- (IBAction)categorySetting:(id)sender {
+    CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] init];
+    [self.navigationController pushViewController:categoryTableViewController animated:YES];
+    [categoryTableViewController release];
 }
 
 - (void)updateCategory:(NSNotification *)info{

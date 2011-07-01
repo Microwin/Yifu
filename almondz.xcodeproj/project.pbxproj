@@ -82,6 +82,11 @@
 		41A34B2813913F9C00715CB4 /* iPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A34B2613913F9C00715CB4 /* iPictureViewController.m */; };
 		41A34B2913913F9C00715CB4 /* iPictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A34B2713913F9C00715CB4 /* iPictureViewController.xib */; };
 		41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */; };
+		A98DB83F13BD84E10022FA22 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB83E13BD84E10022FA22 /* CategoryTableViewController.m */; };
+		A98DB84213BD84F80022FA22 /* CategoryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB84113BD84F80022FA22 /* CategoryTableCell.m */; };
+		A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB84413BD85130022FA22 /* CategoryEditViewController.m */; };
+		A98DB84713BD85140022FA22 /* CategoryEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */; };
+		A98DB84913BD85360022FA22 /* CategoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84813BD85360022FA22 /* CategoryTableCell.xib */; };
 		A9C1629813BCB14000F235F5 /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C1629713BCB14000F235F5 /* ToolView.m */; };
 		A9C1629A13BCB40500F235F5 /* ToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9C1629913BCB40500F235F5 /* ToolView.xib */; };
 /* End PBXBuildFile section */
@@ -178,6 +183,14 @@
 		41A34B2613913F9C00715CB4 /* iPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPictureViewController.m; sourceTree = "<group>"; };
 		41A34B2713913F9C00715CB4 /* iPictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureViewController.xib; sourceTree = "<group>"; };
 		41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureTabbarViewController.xib; sourceTree = "<group>"; };
+		A98DB83D13BD84E10022FA22 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
+		A98DB83E13BD84E10022FA22 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
+		A98DB84013BD84F80022FA22 /* CategoryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableCell.h; sourceTree = "<group>"; };
+		A98DB84113BD84F80022FA22 /* CategoryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableCell.m; sourceTree = "<group>"; };
+		A98DB84313BD85130022FA22 /* CategoryEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryEditViewController.h; sourceTree = "<group>"; };
+		A98DB84413BD85130022FA22 /* CategoryEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryEditViewController.m; sourceTree = "<group>"; };
+		A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryEditViewController.xib; sourceTree = "<group>"; };
+		A98DB84813BD85360022FA22 /* CategoryTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableCell.xib; sourceTree = "<group>"; };
 		A9C1629613BCB14000F235F5 /* ToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolView.h; sourceTree = "<group>"; };
 		A9C1629713BCB14000F235F5 /* ToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolView.m; sourceTree = "<group>"; };
 		A9C1629913BCB40500F235F5 /* ToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolView.xib; sourceTree = "<group>"; };
@@ -388,6 +401,7 @@
 		419645A21377798D00FBB64D /* iPictureSection */ = {
 			isa = PBXGroup;
 			children = (
+				A98DB83B13BD848F0022FA22 /* CategorySetting */,
 				4120C49F13B42C3200E8A553 /* File */,
 				4120C49E13B42C1700E8A553 /* Backup */,
 				4120C4BB13B4818900E8A553 /* DialogView.h */,
@@ -407,6 +421,21 @@
 				4120C4A213B42D4300E8A553 /* CategoryRootCell.xib */,
 			);
 			name = iPictureSection;
+			sourceTree = "<group>";
+		};
+		A98DB83B13BD848F0022FA22 /* CategorySetting */ = {
+			isa = PBXGroup;
+			children = (
+				A98DB83D13BD84E10022FA22 /* CategoryTableViewController.h */,
+				A98DB83E13BD84E10022FA22 /* CategoryTableViewController.m */,
+				A98DB84013BD84F80022FA22 /* CategoryTableCell.h */,
+				A98DB84113BD84F80022FA22 /* CategoryTableCell.m */,
+				A98DB84813BD85360022FA22 /* CategoryTableCell.xib */,
+				A98DB84313BD85130022FA22 /* CategoryEditViewController.h */,
+				A98DB84413BD85130022FA22 /* CategoryEditViewController.m */,
+				A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */,
+			);
+			name = CategorySetting;
 			sourceTree = "<group>";
 		};
 		A9C1629413BCB12500F235F5 /* View */ = {
@@ -523,6 +552,8 @@
 				4120C4BF13B4AC6900E8A553 /* DialogView.xib in Resources */,
 				41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */,
 				A9C1629A13BCB40500F235F5 /* ToolView.xib in Resources */,
+				A98DB84713BD85140022FA22 /* CategoryEditViewController.xib in Resources */,
+				A98DB84913BD85360022FA22 /* CategoryTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +579,9 @@
 				4120C4A313B42D4400E8A553 /* CategoryRootCell.m in Sources */,
 				4120C4BD13B4818900E8A553 /* DialogView.m in Sources */,
 				A9C1629813BCB14000F235F5 /* ToolView.m in Sources */,
+				A98DB83F13BD84E10022FA22 /* CategoryTableViewController.m in Sources */,
+				A98DB84213BD84F80022FA22 /* CategoryTableCell.m in Sources */,
+				A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

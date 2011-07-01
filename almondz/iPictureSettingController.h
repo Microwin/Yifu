@@ -16,7 +16,8 @@
 
 @property (nonatomic, retain) NSMutableArray *selectedImage;
 
--(IBAction)launchController;
--(void)storeSelectedImage:(NSArray *)imageArray withCategory: (NSString *)category;
 
+-(void)storeSelectedImage:(NSArray *)imageArray withCategory: (NSString *)category;
+- (IBAction)launchImagerImporter:(id)sender;
+- (IBAction)categorySetting:(id)sender;
 @end
