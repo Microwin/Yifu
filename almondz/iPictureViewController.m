@@ -210,6 +210,12 @@ static NSMutableArray *kImages = nil;
 #pragma mark - Alert Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [UIView beginAnimations:nil context:context];
+        [UIView setAnimationDuration:.3f];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+
         NSString *str = [[kImages objectAtIndex:[self currentPage]] valueForKey:@"path"];
         NSLog(@"PATH:%@", str);
         [[NSFileManager defaultManager] removeItemAtPath:str error:nil];
@@ -228,6 +234,8 @@ static NSMutableArray *kImages = nil;
         
         [[[kImages objectAtIndex:[self currentPage]] valueForKey:@"imageView"] removeFromSuperview];
         [kImages removeObjectAtIndex:[self currentPage]];
+        [UIView commitAnimations];
+
     }
 }
 @end
