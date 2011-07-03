@@ -91,6 +91,9 @@
 		A98DB84913BD85360022FA22 /* CategoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84813BD85360022FA22 /* CategoryTableCell.xib */; };
 		A9C1629813BCB14000F235F5 /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C1629713BCB14000F235F5 /* ToolView.m */; };
 		A9C1629A13BCB40500F235F5 /* ToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9C1629913BCB40500F235F5 /* ToolView.xib */; };
+		A9EF4C7C13C0195700DEA240 /* ImageBrowseController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF4C7713C0195700DEA240 /* ImageBrowseController.m */; };
+		A9EF4C7D13C0195700DEA240 /* ImageScrollPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF4C7913C0195700DEA240 /* ImageScrollPageController.m */; };
+		A9EF4C7E13C0195700DEA240 /* ImageOperController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF4C7B13C0195700DEA240 /* ImageOperController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +202,12 @@
 		A9C1629613BCB14000F235F5 /* ToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolView.h; sourceTree = "<group>"; };
 		A9C1629713BCB14000F235F5 /* ToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolView.m; sourceTree = "<group>"; };
 		A9C1629913BCB40500F235F5 /* ToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolView.xib; sourceTree = "<group>"; };
+		A9EF4C7613C0195700DEA240 /* ImageBrowseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowseController.h; sourceTree = "<group>"; };
+		A9EF4C7713C0195700DEA240 /* ImageBrowseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowseController.m; sourceTree = "<group>"; };
+		A9EF4C7813C0195700DEA240 /* ImageScrollPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageScrollPageController.h; sourceTree = "<group>"; };
+		A9EF4C7913C0195700DEA240 /* ImageScrollPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageScrollPageController.m; sourceTree = "<group>"; };
+		A9EF4C7A13C0195700DEA240 /* ImageOperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageOperController.h; sourceTree = "<group>"; };
+		A9EF4C7B13C0195700DEA240 /* ImageOperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageOperController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +329,7 @@
 		4196452F137768BD00FBB64D /* almondz */ = {
 			isa = PBXGroup;
 			children = (
+				A9EF4C7413C0193A00DEA240 /* Photo_Viewer */,
 				A9473CE413BDF15900B905E6 /* Hash.h */,
 				A9473CE513BDF15900B905E6 /* Hash.m */,
 				A9C1629413BCB12500F235F5 /* View */,
@@ -457,6 +467,19 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		A9EF4C7413C0193A00DEA240 /* Photo_Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF4C7613C0195700DEA240 /* ImageBrowseController.h */,
+				A9EF4C7713C0195700DEA240 /* ImageBrowseController.m */,
+				A9EF4C7813C0195700DEA240 /* ImageScrollPageController.h */,
+				A9EF4C7913C0195700DEA240 /* ImageScrollPageController.m */,
+				A9EF4C7A13C0195700DEA240 /* ImageOperController.h */,
+				A9EF4C7B13C0195700DEA240 /* ImageOperController.m */,
+			);
+			name = Photo_Viewer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -592,6 +615,9 @@
 				A98DB84213BD84F80022FA22 /* CategoryTableCell.m in Sources */,
 				A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */,
 				A9473CE613BDF15900B905E6 /* Hash.m in Sources */,
+				A9EF4C7C13C0195700DEA240 /* ImageBrowseController.m in Sources */,
+				A9EF4C7D13C0195700DEA240 /* ImageScrollPageController.m in Sources */,
+				A9EF4C7E13C0195700DEA240 /* ImageOperController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

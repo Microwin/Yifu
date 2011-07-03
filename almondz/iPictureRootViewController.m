@@ -10,7 +10,7 @@
 #import "iPictureViewController.h"
 #import "iPictureSettingController.h"
 #import "CategoryRootCell.h"
-
+#import "ImageBrowseController.h"
 @implementation iPictureRootViewController
 
 //@synthesize categoryArray = _categoryArray;
@@ -125,14 +125,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [_categoryArray count];
 }
@@ -215,10 +213,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
         
-    iPictureViewController *iPictureShowController = [[iPictureViewController alloc] init]; 
-    iPictureShowController.category = [_categoryArray objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:iPictureShowController animated:YES];
-    [iPictureShowController release];
+//    iPictureViewController *iPictureShowController = [[iPictureViewController alloc] init]; 
+//    iPictureShowController.category = [_categoryArray objectAtIndex:indexPath.row];
+//    [self.navigationController pushViewController:iPictureShowController animated:YES];
+//    [iPictureShowController release];
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), [_categoryArray objectAtIndex:indexPath.row]];
+    NSArray *nameArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (NSString *str in nameArray) {
+        NSLog(@"Path::%@", str);
+//        UIImage *img = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", path, str]];
+        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", path, str];
+        [array addObject:fullPath];
+    }
+    ImageBrowseController *imgBrower = [[ImageBrowseController alloc] initWithImageNames:array];
+    imgBrower.category = [_categoryArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:imgBrower animated:YES];
+    [array release];
+    [imgBrower release];
+    
 }
 
 @end

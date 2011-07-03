@@ -22,14 +22,14 @@
 
 -(id)initWithAsset:(ALAsset*)_asset {
 	
-	if (self = [super initWithFrame:CGRectMake(0, 0, 0, 0)]) {
+	if ((self = [super initWithFrame:CGRectMake(0, 0, 0, 0)])) {
 		
 		self.asset = _asset;
 		
 		CGRect viewFrames = CGRectMake(0, 0, 75, 75);
 		
 		UIImageView *assetImageView = [[UIImageView alloc] initWithFrame:viewFrames];
-		[assetImageView setContentMode:UIViewContentModeScaleToFill];
+		[assetImageView setContentMode:UIViewContentModeScaleAspectFit];
 		[assetImageView setImage:[UIImage imageWithCGImage:[self.asset thumbnail]]];
 		[self addSubview:assetImageView];
 		[assetImageView release];

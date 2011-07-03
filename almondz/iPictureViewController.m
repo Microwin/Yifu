@@ -108,6 +108,9 @@ static NSMutableArray *kImages = nil;
         [subview setContentMode:UIViewContentModeScaleAspectFit];
         //        subview.tag = i + 1;
         
+        UIImage *img = [UIImage imageWithContentsOfFile:path];
+        NSLog(@"Ori:%d", img.imageOrientation);
+        
         subview.frame = frame;
         
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:subview, @"imageView", path, @"path", nil];

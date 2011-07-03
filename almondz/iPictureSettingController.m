@@ -126,6 +126,8 @@ static NSString *kCategory = nil;   //通知传过来的category
 //    }
     for (int i = 0; i < [imageArray count]; i++) {
         UIImage *image = [imageArray objectAtIndex:i];
+        NSLog(@"OriSave:%d", image.imageOrientation);
+
         NSString *date = [NSString stringWithFormat:@"%@%d", [[NSDate date] description], i];
         NSString *name = [Hash md5:date];
         //        NSString *name = [NSString stringWithFormat:@"%d.png", sum];

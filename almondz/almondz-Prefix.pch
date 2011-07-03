@@ -12,3 +12,39 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define DEBUG
+
+//更详细的日志信息
+#ifdef DEBUG
+#ifdef DEBUG_PRINT_FILENAME
+#define DEBUG_FILENAME [[NSString stringWithUTF8String:__FILE__] lastPathComponent]
+#define DEBUG_FILENAME_LINE_SEP ":"
+#else  //PRINT_FILENAME
+#define DEBUG_FILENAME @""
+#define DEBUG_FILENAME_LINE_SEP ""
+#endif //PRINT_FILENAME
+
+#define DEBUG_NEW_FMT(fmt) \
+[NSString stringWithFormat:@"%s(%@%s%d) %@", \
+__FUNCTION__, \
+DEBUG_FILENAME, \
+DEBUG_FILENAME_LINE_SEP, \
+__LINE__, \
+fmt]
+
+
+//打印日志
+#define DEBUG_LOG(fmt, ...) NSLog(DEBUG_NEW_FMT(fmt), ##__VA_ARGS__, 0)
+//打印空日志，参数0为了消除编译器的警告
+#define DEBUG_LOG_NULL NSLog(DEBUG_NEW_FMT(@""), 0)
+//打印一个变量
+#define DEBUG_LOG_VALUE(x, fmt)  do {  \
+DEBUG_LOG(@#x " = " #fmt, x); \
+} while(0)
+
+#else //DEBUG
+#define DEBUG_LOG(fmt, ...) 
+#define DEBUG_LOG_NULL
+#define DEBUG_LOG_VALUE(x, fmt) 
+#endif //DEBUG
