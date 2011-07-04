@@ -31,6 +31,7 @@
 	if ((self = [super init])) {
 	}
 	self.imageNames  = imageNames;
+//    imageNames_ = [[NSMutableArray alloc] init];
 	self.isCurrentPortrait = YES;
 	return self;
 }
@@ -50,11 +51,27 @@
 }
 
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if ([imageNames_ count] != 0) {
+        [imageNames_ removeAllObjects];
+    }
+//    imageNames_ = nil;
+//    [imageNames_ release];
+    
+    NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category] error:nil];
+    for (NSString *path in array) {
+        NSString *pathf = [NSString stringWithFormat:@"%@/Documents/%@/%@", NSHomeDirectory(), _category, path];
+        [imageNames_ addObject:pathf];
+    }
+    for (NSString *str in imageNames_) {
+        NSLog(@"NAMES:%@\n", str);
+    }
+    DEBUG_LOG_NULL;
+	[self.tableView reloadData];
 }
-*/
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -250,10 +267,10 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
-	DEBUG_LOG_NULL;
-	[self.tableView reloadData];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//	DEBUG_LOG_NULL;
+//	[self.tableView reloadData];
+//}
 
 - (void)viewDidAppear:(BOOL)animated {
 	DEBUG_LOG_NULL;
