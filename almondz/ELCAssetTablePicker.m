@@ -38,6 +38,11 @@ static DialogView *kDialogView = nil;
 	[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:.5];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
+
 -(void)preparePhotos {
     
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

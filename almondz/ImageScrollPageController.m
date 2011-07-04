@@ -215,8 +215,8 @@ static NSMutableArray *kControllers = nil;
 	
 	//当前页
 	CGFloat pageWidth = scrollView.frame.size.width;
-	int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    
+//	int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    int page = [self currentPage];
 	[self loadScrollViewWithPage:page - 1];
 	[self loadScrollViewWithPage:page];
 	[self loadScrollViewWithPage:page + 1];
@@ -404,38 +404,76 @@ static NSMutableArray *kControllers = nil;
         NSLog(@"PATH:%@", str);
         
         [[NSFileManager defaultManager] removeItemAtPath:str error:nil];
-//        [[[kControllers objectAtIndex:[self currentPage]] view] removeFromSuperview];
+        
+//        ImageOperController *controller = [viewControllers_ objectAtIndex:[self currentPage]];
 //        
-//        //如果不是最后一张图片
-//        if ([kImages count] != ([self currentPage] + 1)) {
-//            for (int i = [self currentPage] + 1; i < [kImages count]; i++) {
+//        [controller.view removeFromSuperview];
+        
+        /*
+        
+        //如果不是最后一张图片
+        if ([viewControllers_ count] != ([self currentPage] + 1)) {
+            for (int i = [self currentPage] + 1; i < [viewControllers_ count]; i++) {
 //                UIImageView *imgV = [[kImages objectAtIndex:i] valueForKey:@"imageView"];
-//                CGRect rect = imgV.frame;
-//                rect.origin.x -= 320;
-//                imgV.frame = rect;
-//            }
-//            
-//            CGSize size = self.scrollView.contentSize;
-//            size.width -= 320;
-//            self.scrollView.contentSize = size;
+                ImageOperController *imgC = [viewControllers_ objectAtIndex:i];
+                CGRect rect = imgC.imageView.frame;
+                rect.origin.x -= 320;
+                imgC.imageView.frame = rect;
+            }
+            
+            CGSize size = self.scrollView.contentSize;
+            size.width -= 320;
+            self.scrollView.contentSize = size;
+        }
+        //如果只有一张图片
+        else if ([viewControllers_ count] == 1) {
+            CGSize size = CGSizeMake(320, 480);
+            self.scrollView.contentSize = size;
+        }
+        //如果是排在最后的一张图片
+        else {
+            CGSize size = self.scrollView.contentSize;
+            size.width -= 320;
+            [self.scrollView scrollRectToVisible:CGRectMake(size.width, 0, 320, 480) animated:YES];
+            self.scrollView.contentSize = size;
+        }
+        
+         */
+        //当前页
+        CGFloat pageWidth = scrollView_.frame.size.width;
+        int page = floor((scrollView_.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+        
+        CGSize size = self.scrollView.contentSize;
+        size.width -= 320;
+        self.scrollView.contentSize = size;
+        
+        [[[viewControllers_ objectAtIndex:page] view] removeFromSuperview];
+        [kImages removeObjectAtIndex:page];
+        [viewControllers_ removeObjectAtIndex:page];
+        [imageNames_ removeObjectAtIndex:page];
+//        if (page == 0) {
+//            [self loadScrollViewWithPage:page];
+//            [self loadScrollViewWithPage:page + 1];
 //        }
-//        //如果只有一张图片
-//        else if ([kImages count] == 1) {
-//            CGSize size = CGSizeMake(320, 480);
-//            self.scrollView.contentSize = size;
+//        else if (page == [viewControllers_ count]) {
+//            [self loadScrollViewWithPage:page - 1];
+//            [self loadScrollViewWithPage:page];
+//
 //        }
-//        //如果是排在最后的一张图片
 //        else {
-//            CGSize size = self.scrollView.contentSize;
-//            size.width -= 320;
-//            //            [self.scrollView scrollRectToVisible:CGRectMake(size.width, 0, 320, 480) animated:YES];
-//            self.scrollView.contentSize = size;
+//            [self loadScrollViewWithPage:page - 1];
+//            [self loadScrollViewWithPage:page];
+//            [self loadScrollViewWithPage:page + 1];
 //        }
-//        
-//        
-//        
-//        [kImages removeObjectAtIndex:[self currentPage]];
-//        [kControllers removeObjectAtIndex:[self currentPage]];
+        NSLog(@"Page:%d, VC:%d, vKI:%d", [self currentPage], [viewControllers_ count], [kImages count]);
+        if ([viewControllers_ count] != 0) {
+            [viewControllers_ removeAllObjects];
+        }
+        for (int i=0; i<[kImages count]; i++) {
+            [viewControllers_ addObject:[NSNull null]];
+        }
+        [self loadScrollViewWithPage:[self currentPage]];
+        [self.scrollView reloadInputViews];
         [UIView commitAnimations];
         
     }
