@@ -28,6 +28,8 @@
     NSString *_category;    //分类
     
     NSArray *_imagePathArray;
+    
+    BOOL isEditing;
 }
 
 @property (nonatomic, retain) NSMutableArray *imageNames;

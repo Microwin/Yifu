@@ -36,6 +36,12 @@
 	return self;
 }
 
+- (id)init {
+    if ((self = [super init])) {
+
+    }
+    return self;
+}
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -54,20 +60,21 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([imageNames_ count] != 0) {
+    if (imageNames_) {
+        imageNames_ = nil;
+        [imageNames_ release];
+    }
+    if (imageNames_ && [imageNames_ count] != 0) {
         [imageNames_ removeAllObjects];
     }
-//    imageNames_ = nil;
-//    [imageNames_ release];
-    
+
+    imageNames_ = [[NSMutableArray alloc] init];
     NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category] error:nil];
     for (NSString *path in array) {
         NSString *pathf = [NSString stringWithFormat:@"%@/Documents/%@/%@", NSHomeDirectory(), _category, path];
         [imageNames_ addObject:pathf];
     }
-    for (NSString *str in imageNames_) {
-        NSLog(@"NAMES:%@\n", str);
-    }
+    NSLog(@"COUNT!!!!!:%d", [imageNames_ count]);
     DEBUG_LOG_NULL;
 	[self.tableView reloadData];
 }
@@ -130,31 +137,31 @@
 	int i;
 	int itemsNumPerRow = self.isCurrentPortrait ? 4 : 6;
 	
-	if (itemsNumPerRow != cell.subviews.count) {
+	if (1/*itemsNumPerRow != cell.subviews.count*/) {
 		DEBUG_LOG_VALUE(indexPath, %@);
 
-	for (UIView *view in cell.subviews) {
-		[view removeFromSuperview];
-	}
-	for (i=0; i<itemsNumPerRow; i++) {
-		if (indexPath.row*itemsNumPerRow+i >= [imageNames_ count]) break;
-		
-		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(80*i, 0, 80, 80)];
-		
-		NSString *imagePath = [imageNames_ objectAtIndex:indexPath.row*itemsNumPerRow+i];
-		//DEBUG_LOG_VALUE(imagePath, %@);
-		UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
-		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-		imageView.image = image;
-		imageView.contentMode = UIViewContentModeScaleAspectFit;
+        for (UIView *view in cell.subviews) {
+            [view removeFromSuperview];
+        }
+        for (i=0; i<itemsNumPerRow; i++) {
+            if (indexPath.row*itemsNumPerRow+i >= [imageNames_ count]) break;
+            
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(80*i, 0, 80, 80)];
+            
+            NSString *imagePath = [imageNames_ objectAtIndex:indexPath.row*itemsNumPerRow+i];
+            //DEBUG_LOG_VALUE(imagePath, %@);
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+            imageView.image = image;
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
 
-		
-		[button addSubview:imageView];
-		button.tag = indexPath.row*itemsNumPerRow+i;
-		
-		[button addTarget:self action:@selector(didClickButton:) forControlEvents:UIControlEventTouchUpInside];
-		[cell addSubview:button];
-	}
+            
+            [button addSubview:imageView];
+            button.tag = indexPath.row*itemsNumPerRow+i;
+            
+            [button addTarget:self action:@selector(didClickButton:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:button];
+        }
     }
 	
     return cell;

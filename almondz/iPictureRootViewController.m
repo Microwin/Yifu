@@ -227,6 +227,8 @@
         [array addObject:fullPath];
     }
     ImageBrowseController *imgBrower = [[ImageBrowseController alloc] initWithImageNames:array];
+//    ImageBrowseController *imgBrower = [[ImageBrowseController alloc] init];
+
     imgBrower.category = [_categoryArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:imgBrower animated:YES];
     [array release];

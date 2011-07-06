@@ -11,12 +11,15 @@
 @protocol ToolViewDelegate <NSObject>
 - (void)deletePicture;
 - (void)sharePicture;
+- (void)beginEditing;
+- (void)endEditingWithString:(NSString *)string;
 @end
-@interface ToolView : UIView {
+@interface ToolView : UIView <UITextViewDelegate> {
     id <ToolViewDelegate> delegate;
     UIButton *_topButton;
     UITextView *_textView;
     UIView *_bottomView;
+    BOOL isDetailOpen;
 }
 @property (nonatomic, assign) id <ToolViewDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UIButton *topButton;

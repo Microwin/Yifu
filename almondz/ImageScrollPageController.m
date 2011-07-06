@@ -40,8 +40,9 @@ static NSMutableArray *kControllers = nil;
 - (id)initWithImageNames:(NSMutableArray *)imageNames page:(int)page {
 
 	if ((self = [super init])) {
+        
 	}
-	
+	isEditing = NO;
 	self.imageNames = imageNames;
 	self.page = page;
 	
@@ -51,33 +52,35 @@ static NSMutableArray *kControllers = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	DEBUG_LOG_NULL;
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
-    _toolView = [array objectAtIndex:0];
-    _toolView.center = CGPointMake(160, 400);
-    _toolView.delegate = self;
-    [self.view addSubview:_toolView];
-    NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category];
     
-    _imagePathArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-    kImages = [[NSMutableArray alloc] init];
+//    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
+//    _toolView = [array objectAtIndex:0];
+//    _toolView.center = CGPointMake(160, 400);
+//    _toolView.delegate = self;
+//    [self.view addSubview:_toolView];
     
-    for (int i = 0; i < [_imagePathArray count]; i++) {
-        NSString *path = [NSString stringWithFormat:@"%@/%@", [self currentPath], [_imagePathArray objectAtIndex:i]];
-        UIImageView *subview = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
-        [subview setContentMode:UIViewContentModeScaleAspectFit];
-        //        subview.tag = i + 1;
-        
-        UIImage *img = [UIImage imageWithContentsOfFile:path];
-        NSLog(@"Ori:%d", img.imageOrientation);
-        
-        
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:subview, @"imageView", path, @"path", nil];
-        
-        NSLog(@"Path:%@", [dic valueForKey:@"path"]);
-        [kImages addObject:dic];
-        [self.scrollView addSubview:[[kImages objectAtIndex:i] valueForKey:@"imageView"]];
-        [subview release];
-    }
+//    NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category];
+//    
+//    _imagePathArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+//    kImages = [[NSMutableArray alloc] init];
+//    
+//    for (int i = 0; i < [_imagePathArray count]; i++) {
+//        NSString *path = [NSString stringWithFormat:@"%@/%@", [self currentPath], [_imagePathArray objectAtIndex:i]];
+//        UIImageView *subview = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
+//        [subview setContentMode:UIViewContentModeScaleAspectFit];
+//        //        subview.tag = i + 1;
+//        
+//        UIImage *img = [UIImage imageWithContentsOfFile:path];
+//        NSLog(@"Ori:%d", img.imageOrientation);
+//        
+//        
+//        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:subview, @"imageView", path, @"path", nil];
+//        
+//        NSLog(@"Path:%@", [dic valueForKey:@"path"]);
+//        [kImages addObject:dic];
+//        [self.scrollView addSubview:[[kImages objectAtIndex:i] valueForKey:@"imageView"]];
+//        [subview release];
+//    }
 
 }
 
@@ -168,6 +171,26 @@ static NSMutableArray *kControllers = nil;
     [super dealloc];
 }
 
+- (void)hideNavbar {
+    BOOL isHide = self.navigationController.navigationBarHidden;
+//    BOOL isTabbarHide = self.tabBarController.tabBar.hidden;
+    [self.navigationController setNavigationBarHidden:!isHide animated:YES];
+    _toolView.hidden = !_toolView.hidden;
+//    self.tabBarController.tabBar.hidden = !isTabbarHide;
+    if (isEditing == YES) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:.3f];
+        [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+        CGPoint point = _toolView.center;
+        point.y += 250;
+        _toolView.center = point;
+        [UIView commitAnimations];
+        [_toolView.textView resignFirstResponder];
+        isEditing = NO;
+    }
+}
+
 //把第page页的视图添加到self.scrollView的合适位置。
 - (void)loadScrollViewWithPage:(int)page
 {
@@ -195,6 +218,9 @@ static NSMutableArray *kControllers = nil;
     // add the controller's view to the scroll view
     if (controller.view.superview == nil)
     { 
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideNavbar)];
+        [controller.view addGestureRecognizer:tap];
+        [tap release];
         [scrollView_ addSubview:controller.view];
     }
 	
@@ -380,7 +406,7 @@ static NSMutableArray *kControllers = nil;
 }
 
 - (void)deletePicture {
-    if ([kImages count] == 0) {
+    if ([imageNames_ count] == 0) {
         return;
     }
     //    NSString *str = [NSString stringWithFormat:@"%@/%d.png", [self currentPath], [self currentPage]];
@@ -389,6 +415,29 @@ static NSMutableArray *kControllers = nil;
     [alert release];
     
 }
+
+- (void)beginEditing {
+    isEditing = YES;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:.3f];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+    CGPoint point = _toolView.center;
+    point.y -= 250;
+    _toolView.center = point;
+    [UIView commitAnimations];
+}
+
+//- (void)endEditingWithString:(NSString *)string {
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//    [UIView setAnimationDuration:.3f];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+//    CGPoint point = _toolView.center;
+//    point.y += 250;
+//    _toolView.center = point;
+//    [UIView commitAnimations];
+//}
 
 #pragma mark - Alert Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -400,7 +449,7 @@ static NSMutableArray *kControllers = nil;
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
         
-        NSString *str = [[kImages objectAtIndex:[self currentPage]] valueForKey:@"path"];
+        NSString *str = [imageNames_ objectAtIndex:[self currentPage]];
         NSLog(@"PATH:%@", str);
         
         [[NSFileManager defaultManager] removeItemAtPath:str error:nil];
@@ -448,7 +497,7 @@ static NSMutableArray *kControllers = nil;
         self.scrollView.contentSize = size;
         
         [[[viewControllers_ objectAtIndex:page] view] removeFromSuperview];
-        [kImages removeObjectAtIndex:page];
+//        [kImages removeObjectAtIndex:page];
         [viewControllers_ removeObjectAtIndex:page];
         [imageNames_ removeObjectAtIndex:page];
 //        if (page == 0) {
@@ -465,11 +514,11 @@ static NSMutableArray *kControllers = nil;
 //            [self loadScrollViewWithPage:page];
 //            [self loadScrollViewWithPage:page + 1];
 //        }
-        NSLog(@"Page:%d, VC:%d, vKI:%d", [self currentPage], [viewControllers_ count], [kImages count]);
+        NSLog(@"Page:%d, VC:%d", [self currentPage], [viewControllers_ count]);
         if ([viewControllers_ count] != 0) {
             [viewControllers_ removeAllObjects];
         }
-        for (int i=0; i<[kImages count]; i++) {
+        for (int i=0; i<[imageNames_ count]; i++) {
             [viewControllers_ addObject:[NSNull null]];
         }
         [self loadScrollViewWithPage:[self currentPage]];
@@ -478,5 +527,7 @@ static NSMutableArray *kControllers = nil;
         
     }
 }
+
+
 
 @end

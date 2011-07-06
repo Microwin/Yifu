@@ -44,6 +44,7 @@
 */
 
 - (void)awakeFromNib {
+    isDetailOpen = NO;
     _topButton.layer.cornerRadius = 5;
     _textView.layer.cornerRadius = 5;
     _textView.alpha = 0.f;
@@ -61,6 +62,7 @@
 
 
 - (IBAction)topButtonPressed:(id)sender {
+    isDetailOpen = !isDetailOpen;
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
     [UIView setAnimationDuration:.3f];
@@ -74,6 +76,11 @@
         _topButton.center = CGPointMake(110, 103);
         _textView.alpha = 0.f;
     }
+    if (isDetailOpen) {
+        [_topButton setTitle:@"点击以收起详细视图" forState:0];
+    }
+    else
+        [_topButton setTitle:@"点击以展开详细视图" forState:0];
     [UIView commitAnimations];
 }
 
@@ -84,4 +91,13 @@
 - (IBAction)deleteButtonPressed:(id)sender {
     [delegate deletePicture];
 }
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [delegate beginEditing];
+}
+
+//- (void)textViewDidEndEditing:(UITextView *)textView {
+//    [delegate endEditingWithString:textView.text];
+//    [textView resignFirstResponder];
+//}
 @end
