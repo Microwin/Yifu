@@ -96,6 +96,7 @@
         _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
         [self.tableView reloadData];
     }
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
 
@@ -108,6 +109,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    //self.navigationController.navigationBar.hidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

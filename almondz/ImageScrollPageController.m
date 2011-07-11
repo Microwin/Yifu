@@ -402,6 +402,7 @@ static NSMutableArray *kControllers = nil;
 
 #pragma mark - ToolView Delegate
 - (void)sharePicture {
+    [_toolView.textView resignFirstResponder];
     [self sendMail:nil];
 }
 

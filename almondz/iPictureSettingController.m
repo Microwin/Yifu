@@ -67,6 +67,12 @@ static NSString *kCategory = nil;   //通知传过来的category
     
 }
 
+- (void)storeMethod {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    [pool release];
+}
+
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
 	
 	if (_selectedImage) {
@@ -87,6 +93,7 @@ static NSString *kCategory = nil;   //通知传过来的category
     if (kCategory) {
         NSLog(@"Category:%@", kCategory);
         [self storeSelectedImage:_selectedImage withCategory:kCategory];
+        [NSThread detachNewThreadSelector:@selector(storeMethod) toTarget:self withObject:nil];
 
     }
 
@@ -136,6 +143,8 @@ static NSString *kCategory = nil;   //通知传过来的category
         sum++;
     }
     kCategory = nil;
+    
+  
     
 }
 

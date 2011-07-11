@@ -71,8 +71,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear: animated];
-    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.title = @"Home";
+//    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.title = @"Home";
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
