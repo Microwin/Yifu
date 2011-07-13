@@ -60,6 +60,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     if (imageNames_) {
         imageNames_ = nil;
         [imageNames_ release];
@@ -77,6 +79,10 @@
     NSLog(@"COUNT!!!!!:%d", [imageNames_ count]);
     DEBUG_LOG_NULL;
 	[self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
 }
 
 /*

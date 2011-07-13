@@ -9,8 +9,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ELCImagePickerController.h"
+#import "DialogView.h"
 
-@interface iPictureSettingController : UIViewController <ELCImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface iPictureSettingController : UIViewController <ELCImagePickerControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, DialogViewDelegate> {
     NSMutableArray *_selectedImage;
 }
 

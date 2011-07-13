@@ -14,7 +14,7 @@
 @synthesize textField = _textField;
 @synthesize detailTextField = _detailTextField;
 @synthesize pickerView = _pickerView;
-
+@synthesize delegate;
 - (void)closeKeyboard {
     [_textField resignFirstResponder];
 }
@@ -84,6 +84,11 @@
 - (IBAction)closeKeyboard:(id)sender {
     [_textField resignFirstResponder];
     [_detailTextField resignFirstResponder];
+}
+
+- (IBAction)okButtonPressed:(id)sender {
+    [delegate importImageswithCategory:_textField.text];
+    [self removeFromSuperview];
 }
 
 #pragma mark - pickerView Delegate Method

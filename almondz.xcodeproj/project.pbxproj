@@ -89,6 +89,7 @@
 		A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB84413BD85130022FA22 /* CategoryEditViewController.m */; };
 		A98DB84713BD85140022FA22 /* CategoryEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */; };
 		A98DB84913BD85360022FA22 /* CategoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84813BD85360022FA22 /* CategoryTableCell.xib */; };
+		A9BE52FF13CDD82C0052D1B5 /* ImageImporterController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE52FE13CDD82C0052D1B5 /* ImageImporterController.m */; };
 		A9C1629813BCB14000F235F5 /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C1629713BCB14000F235F5 /* ToolView.m */; };
 		A9C1629A13BCB40500F235F5 /* ToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9C1629913BCB40500F235F5 /* ToolView.xib */; };
 		A9EF4C7C13C0195700DEA240 /* ImageBrowseController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF4C7713C0195700DEA240 /* ImageBrowseController.m */; };
@@ -199,6 +200,8 @@
 		A98DB84413BD85130022FA22 /* CategoryEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryEditViewController.m; sourceTree = "<group>"; };
 		A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryEditViewController.xib; sourceTree = "<group>"; };
 		A98DB84813BD85360022FA22 /* CategoryTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableCell.xib; sourceTree = "<group>"; };
+		A9BE52FD13CDD82C0052D1B5 /* ImageImporterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageImporterController.h; sourceTree = "<group>"; };
+		A9BE52FE13CDD82C0052D1B5 /* ImageImporterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageImporterController.m; sourceTree = "<group>"; };
 		A9C1629613BCB14000F235F5 /* ToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolView.h; sourceTree = "<group>"; };
 		A9C1629713BCB14000F235F5 /* ToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolView.m; sourceTree = "<group>"; };
 		A9C1629913BCB40500F235F5 /* ToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolView.xib; sourceTree = "<group>"; };
@@ -420,12 +423,10 @@
 		419645A21377798D00FBB64D /* iPictureSection */ = {
 			isa = PBXGroup;
 			children = (
+				A9BE52FB13CDD7E20052D1B5 /* ImageImporterController */,
 				A98DB83B13BD848F0022FA22 /* CategorySetting */,
 				4120C49F13B42C3200E8A553 /* File */,
 				4120C49E13B42C1700E8A553 /* Backup */,
-				4120C4BB13B4818900E8A553 /* DialogView.h */,
-				4120C4BC13B4818900E8A553 /* DialogView.m */,
-				4120C4BE13B4AC5900E8A553 /* DialogView.xib */,
 				41A34B2513913F9C00715CB4 /* iPictureViewController.h */,
 				41A34B2613913F9C00715CB4 /* iPictureViewController.m */,
 				41A34B2713913F9C00715CB4 /* iPictureViewController.xib */,
@@ -455,6 +456,18 @@
 				A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */,
 			);
 			name = CategorySetting;
+			sourceTree = "<group>";
+		};
+		A9BE52FB13CDD7E20052D1B5 /* ImageImporterController */ = {
+			isa = PBXGroup;
+			children = (
+				A9BE52FD13CDD82C0052D1B5 /* ImageImporterController.h */,
+				A9BE52FE13CDD82C0052D1B5 /* ImageImporterController.m */,
+				4120C4BB13B4818900E8A553 /* DialogView.h */,
+				4120C4BC13B4818900E8A553 /* DialogView.m */,
+				4120C4BE13B4AC5900E8A553 /* DialogView.xib */,
+			);
+			name = ImageImporterController;
 			sourceTree = "<group>";
 		};
 		A9C1629413BCB12500F235F5 /* View */ = {
@@ -618,6 +631,7 @@
 				A9EF4C7C13C0195700DEA240 /* ImageBrowseController.m in Sources */,
 				A9EF4C7D13C0195700DEA240 /* ImageScrollPageController.m in Sources */,
 				A9EF4C7E13C0195700DEA240 /* ImageOperController.m in Sources */,
+				A9BE52FF13CDD82C0052D1B5 /* ImageImporterController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

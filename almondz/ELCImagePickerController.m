@@ -28,10 +28,23 @@
 	NSMutableArray *returnArray = [[[NSMutableArray alloc] init] autorelease];
 	
 	for(ALAsset *asset in _assets) {
-
 		NSMutableDictionary *workingDictionary = [[NSMutableDictionary alloc] init];
 		[workingDictionary setObject:[asset valueForProperty:ALAssetPropertyType] forKey:@"UIImagePickerControllerMediaType"];
+        
+        //这里原本是fullScreenImage
 		[workingDictionary setObject:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage] scale:1.0 orientation:[[asset valueForProperty:@"ALAssetPropertyOrientation"] intValue]] forKey:@"UIImagePickerControllerOriginalImage"];
+        
+        
+        
+//        [workingDictionary setObject:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage] scale:1.0 orientation:UIImageOrientationUp] forKey:@"UIImagePickerControllerOriginalImage"];
+//        UIImage *tI = [workingDictionary objectForKey:@"UIImagePickerControllerOriginalImage"];
+//        NSData *tD = UIImagePNGRepresentation(tI);
+//        [tD writeToFile:[NSString stringWithFormat:@"%@/Documents/test.png", NSHomeDirectory()] atomically:YES];
+        
+        
+        
+        
+        
 		[workingDictionary setObject:[[asset valueForProperty:ALAssetPropertyURLs] valueForKey:[[[asset valueForProperty:ALAssetPropertyURLs] allKeys] objectAtIndex:0]] forKey:@"UIImagePickerControllerReferenceURL"];
 		
 		[returnArray addObject:workingDictionary];

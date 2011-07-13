@@ -55,7 +55,11 @@ static DialogView *kDialogView = nil;
          {
              return;
          }
-         
+
+//         UIImage *img = [UIImage imageWithCGImage:[[result defaultRepresentation] fullScreenImage]];
+//         NSData *tD = UIImagePNGRepresentation(img);
+//         [tD writeToFile:[NSString stringWithFormat:@"%@/Documents/test8.png", NSHomeDirectory()] atomically:YES];
+
          ELCAsset *elcAsset = [[[ELCAsset alloc] initWithAsset:result] autorelease];
          [elcAsset setParent:self];
          [self.elcAssets addObject:elcAsset];

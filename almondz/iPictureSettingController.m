@@ -9,30 +9,78 @@
 #import "iPictureSettingController.h"
 #import "ELCImagePickerController.h"
 #import "ELCAlbumPickerController.h"
-#import "DialogView.h"
 #import "CategoryTableViewController.h"
 #import "Hash.h"
+#import "ImageImporterController.h"
 
 @implementation iPictureSettingController
 
 @synthesize selectedImage = _selectedImage;
 
 static NSString *kCategory = nil;   //通知传过来的category
+static ImageImporterController *kPicker = nil;
 
-- (IBAction)launchImagerImporter:(id)sender {	
-    ELCAlbumPickerController *albumController = [[ELCAlbumPickerController alloc] initWithNibName:@"ELCAlbumPickerController" bundle:[NSBundle mainBundle]];  
-    
-	ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initWithRootViewController:albumController];
-    
-    [albumController setParent:elcPicker];
-    
-	[elcPicker setDelegate:self];
-    
-	[self presentModalViewController:elcPicker animated:YES];
-    [elcPicker release];
-    [albumController release];
+//- (IBAction)launchImagerImporter:(id)sender {	
+//    ELCAlbumPickerController *albumController = [[ELCAlbumPickerController alloc] initWithNibName:@"ELCAlbumPickerController" bundle:[NSBundle mainBundle]];  
+//    
+//	ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initWithRootViewController:albumController];
+//    
+//    [albumController setParent:elcPicker];
+//    
+//	[elcPicker setDelegate:self];
+//    
+//	[self presentModalViewController:elcPicker animated:YES];
+//    [elcPicker release];
+//    [albumController release];
+//}
+
+//显示导入对话框
+- (void)showDialogView {
+    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
+    DialogView *dialogView = [array objectAtIndex:0];
+    dialogView.delegate = self;
+    CGPoint point = CGPointMake(160, 200);
+    dialogView.center = point;
+    [kPicker.view addSubview:dialogView];
 }
 
+//打开UIImagePickerController
+- (IBAction)launchImagerImporter:(id)sender {	
+    ImageImporterController *pickerController = [[ImageImporterController alloc] init];
+    kPicker = pickerController;
+    pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    pickerController.delegate = self;
+    pickerController.dialogView.delegate = self;
+//    UIToolbar *toolBar = [[UIToolbar alloc] init];
+//    toolBar.barStyle = UIBarStyleBlackTranslucent;
+//    toolBar.frame = CGRectMake(0, 436, 320, 44);
+//    [pickerController.view addSubview:toolBar];
+//    UIBarButtonItem *okButton = [[UIBarButtonItem alloc] initWithTitle:@"导入" style:UIBarButtonItemStyleDone target:self action:@selector(showDialogView)];
+//    [toolBar setItems:[NSArray arrayWithObject:okButton] animated:YES];
+//    [toolBar release];
+    [self presentModalViewController:pickerController animated:YES];
+}
+
+#pragma mark - UIImagePickerController delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
+    if (_selectedImage == nil) {
+        _selectedImage = [[NSMutableArray alloc] init];
+    }
+    [_selectedImage addObject:img];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    kPicker = nil;
+    if (_selectedImage && [_selectedImage count]) {
+        [_selectedImage removeAllObjects];
+    }
+    [picker dismissModalViewControllerAnimated:YES];
+}
+
+//显示分类设置控制器
 - (IBAction)categorySetting:(id)sender {
     CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:categoryTableViewController animated:YES];
@@ -116,7 +164,7 @@ static NSString *kCategory = nil;   //通知传过来的category
     if ([category isEqualToString:@""]) {
         return;
     }
-    NSLog(@"CAT:%@", category);
+
     NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), category];
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     
@@ -133,22 +181,19 @@ static NSString *kCategory = nil;   //通知传过来的category
 //    }
     for (int i = 0; i < [imageArray count]; i++) {
         UIImage *image = [imageArray objectAtIndex:i];
-        NSLog(@"OriSave:%d", image.imageOrientation);
-
         NSString *date = [NSString stringWithFormat:@"%@%d", [[NSDate date] description], i];
         NSString *name = [Hash md5:date];
-        //        NSString *name = [NSString stringWithFormat:@"%d.png", sum];
         NSData *imgData = UIImagePNGRepresentation(image);
         [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
         sum++;
     }
     kCategory = nil;
-    
-  
-    
 }
 
-
+#pragma mark - DialogView Delegate
+- (void)importImageswithCategory:(NSString *)categoryName {
+    [self storeSelectedImage:_selectedImage withCategory:categoryName];
+}
 
 
 - (void)didReceiveMemoryWarning
