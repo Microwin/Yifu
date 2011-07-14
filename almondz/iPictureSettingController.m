@@ -18,7 +18,7 @@
 @synthesize selectedImage = _selectedImage;
 
 static NSString *kCategory = nil;   //通知传过来的category
-static ImageImporterController *kPicker = nil;
+//static ImageImporterController *kPicker = nil;
 
 //- (IBAction)launchImagerImporter:(id)sender {	
 //    ELCAlbumPickerController *albumController = [[ELCAlbumPickerController alloc] initWithNibName:@"ELCAlbumPickerController" bundle:[NSBundle mainBundle]];  
@@ -35,48 +35,39 @@ static ImageImporterController *kPicker = nil;
 //}
 
 //显示导入对话框
-- (void)showDialogView {
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
-    DialogView *dialogView = [array objectAtIndex:0];
-    dialogView.delegate = self;
-    CGPoint point = CGPointMake(160, 200);
-    dialogView.center = point;
-    [kPicker.view addSubview:dialogView];
-}
+//- (void)showDialogView {
+//    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
+//    DialogView *dialogView = [array objectAtIndex:0];
+//    dialogView.delegate = self;
+//    CGPoint point = CGPointMake(160, 200);
+//    dialogView.center = point;
+//    [kPicker.view addSubview:dialogView];
+//}
 
 //打开UIImagePickerController
 - (IBAction)launchImagerImporter:(id)sender {	
     ImageImporterController *pickerController = [[ImageImporterController alloc] init];
-    kPicker = pickerController;
+    //kPicker = pickerController;
     pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     pickerController.delegate = self;
-    pickerController.dialogView.delegate = self;
-//    UIToolbar *toolBar = [[UIToolbar alloc] init];
-//    toolBar.barStyle = UIBarStyleBlackTranslucent;
-//    toolBar.frame = CGRectMake(0, 436, 320, 44);
-//    [pickerController.view addSubview:toolBar];
-//    UIBarButtonItem *okButton = [[UIBarButtonItem alloc] initWithTitle:@"导入" style:UIBarButtonItemStyleDone target:self action:@selector(showDialogView)];
-//    [toolBar setItems:[NSArray arrayWithObject:okButton] animated:YES];
-//    [toolBar release];
     [self presentModalViewController:pickerController animated:YES];
+    [pickerController release];
 }
 
 #pragma mark - UIImagePickerController delegate
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(ImageImporterController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
-    if (_selectedImage == nil) {
-        _selectedImage = [[NSMutableArray alloc] init];
-    }
-    [_selectedImage addObject:img];
+    [picker.selectedImages addObject:img];
+    [picker updateToolBarInfo];
     
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    kPicker = nil;
-    if (_selectedImage && [_selectedImage count]) {
-        [_selectedImage removeAllObjects];
-    }
+- (void)imagePickerControllerDidCancel:(ImageImporterController *)picker {
+//    kPicker = nil;
+//    if (_selectedImage && [_selectedImage count]) {
+//        [_selectedImage removeAllObjects];
+//    }
     [picker dismissModalViewControllerAnimated:YES];
 }
 
@@ -121,6 +112,7 @@ static ImageImporterController *kPicker = nil;
     [pool release];
 }
 
+/*
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
 	
 	if (_selectedImage) {
@@ -152,7 +144,7 @@ static ImageImporterController *kPicker = nil;
     
 	[self dismissModalViewControllerAnimated:YES];
 }
-
+*/
 #pragma mark storeFilefromselectedimage
 
 - (NSURL *)applicationDocumentsDirectory
@@ -160,6 +152,7 @@ static ImageImporterController *kPicker = nil;
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+/*
 -(void)storeSelectedImage:(NSArray *)imageArray withCategory: (NSString *)category {
     if ([category isEqualToString:@""]) {
         return;
@@ -170,15 +163,6 @@ static ImageImporterController *kPicker = nil;
     
     int sum = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] count];
  
-
-//    for (UIImage *image in imageArray) {
-//        NSString *date = [[NSDate date] description];
-//        NSString *name = [Hash md5:date];
-////        NSString *name = [NSString stringWithFormat:@"%d.png", sum];
-//        NSData *imgData = UIImagePNGRepresentation(image);
-//        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
-//        sum++;
-//    }
     for (int i = 0; i < [imageArray count]; i++) {
         UIImage *image = [imageArray objectAtIndex:i];
         NSString *date = [NSString stringWithFormat:@"%@%d", [[NSDate date] description], i];
@@ -194,7 +178,7 @@ static ImageImporterController *kPicker = nil;
 - (void)importImageswithCategory:(NSString *)categoryName {
     [self storeSelectedImage:_selectedImage withCategory:categoryName];
 }
-
+*/
 
 - (void)didReceiveMemoryWarning
 {

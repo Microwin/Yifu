@@ -8,17 +8,16 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ELCImagePickerController.h"
-#import "DialogView.h"
+//#import "ELCImagePickerController.h"
 
-@interface iPictureSettingController : UIViewController <ELCImagePickerControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, DialogViewDelegate> {
+@interface iPictureSettingController : UIViewController </*ELCImagePickerControllerDelegate,*/ UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     NSMutableArray *_selectedImage;
 }
 
 @property (nonatomic, retain) NSMutableArray *selectedImage;
 
 
--(void)storeSelectedImage:(NSArray *)imageArray withCategory: (NSString *)category;
+//-(void)storeSelectedImage:(NSArray *)imageArray withCategory: (NSString *)category;
 - (IBAction)launchImagerImporter:(id)sender;
 - (IBAction)categorySetting:(id)sender;
 @end

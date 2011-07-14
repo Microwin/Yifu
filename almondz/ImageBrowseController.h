@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ImageImporterController.h"
 
-
-@interface ImageBrowseController : UITableViewController {
+@interface ImageBrowseController : UITableViewController <UIImagePickerControllerDelegate> {
 
 	NSMutableArray *imageNames_;
 	BOOL isCurrentPortrait_;

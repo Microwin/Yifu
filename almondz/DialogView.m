@@ -78,7 +78,8 @@
 }
 
 - (IBAction)closeWindows:(id)sender {
-    [self removeFromSuperview];
+    self.alpha = 0.f;
+//    [self removeFromSuperview];
 }
 
 - (IBAction)closeKeyboard:(id)sender {
@@ -88,7 +89,8 @@
 
 - (IBAction)okButtonPressed:(id)sender {
     [delegate importImageswithCategory:_textField.text];
-    [self removeFromSuperview];
+//    [self removeFromSuperview];
+    self.alpha = 0.f;
 }
 
 #pragma mark - pickerView Delegate Method

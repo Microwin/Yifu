@@ -7,10 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class DialogView;
-@interface ImageImporterController : UIImagePickerController  {
+#import "DialogView.h"
+@interface ImageImporterController : UIImagePickerController <DialogViewDelegate> {
     DialogView *_dialogView;
+    NSInteger _imageNumber;
+    UIButton *_imageSelectedInfo;
+    NSMutableArray *_selectedImages;
 }
 @property (nonatomic, retain) DialogView *dialogView;
+@property (nonatomic, assign) NSInteger imageNumber;
+@property (nonatomic, retain) NSMutableArray *selectedImages;
+- (void)updateToolBarInfo;
 @end

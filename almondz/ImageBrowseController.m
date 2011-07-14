@@ -43,6 +43,31 @@
     return self;
 }
 
+- (void)launchImageImporter {
+    ImageImporterController *importer = [[ImageImporterController alloc] init];
+    importer.delegate = self;
+    importer.dialogView.textField.text = _category;
+    importer.dialogView.textField.userInteractionEnabled = NO;
+    
+    [self presentModalViewController:importer animated:YES];
+    [importer release];
+    
+}
+
+#pragma mark - UIImagePickerController delegate
+
+- (void)imagePickerController:(ImageImporterController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
+    [picker.selectedImages addObject:img];
+    [picker updateToolBarInfo];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(ImageImporterController *)picker {
+
+    [picker dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -52,16 +77,17 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.title = @"图片浏览";
-	
+
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(launchImageImporter)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release];
+    
 	self.tableView.separatorColor = [UIColor whiteColor];
+    
 }
 
 
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+- (void)refreshImages {
     if (imageNames_) {
         imageNames_ = nil;
         [imageNames_ release];
@@ -69,7 +95,7 @@
     if (imageNames_ && [imageNames_ count] != 0) {
         [imageNames_ removeAllObjects];
     }
-
+    
     imageNames_ = [[NSMutableArray alloc] init];
     NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category] error:nil];
     for (NSString *path in array) {
@@ -78,7 +104,31 @@
     }
     NSLog(@"COUNT!!!!!:%d", [imageNames_ count]);
     DEBUG_LOG_NULL;
-	[self.tableView reloadData];
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [self performSelectorInBackground:@selector(refreshImages) withObject:nil];
+//    if (imageNames_) {
+//        imageNames_ = nil;
+//        [imageNames_ release];
+//    }
+//    if (imageNames_ && [imageNames_ count] != 0) {
+//        [imageNames_ removeAllObjects];
+//    }
+//
+//    imageNames_ = [[NSMutableArray alloc] init];
+//    NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category] error:nil];
+//    for (NSString *path in array) {
+//        NSString *pathf = [NSString stringWithFormat:@"%@/Documents/%@/%@", NSHomeDirectory(), _category, path];
+//        [imageNames_ addObject:pathf];
+//    }
+//    NSLog(@"COUNT!!!!!:%d", [imageNames_ count]);
+//    DEBUG_LOG_NULL;
+//	[self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -137,6 +187,7 @@
     if (cell == nil) {
 		DEBUG_LOG_NULL;
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 
     // Configure the cell...
