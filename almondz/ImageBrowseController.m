@@ -99,10 +99,13 @@
     imageNames_ = [[NSMutableArray alloc] init];
     NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category] error:nil];
     for (NSString *path in array) {
+        if ([path isEqualToString:@"Details.plist"]) {
+            continue;
+        }
         NSString *pathf = [NSString stringWithFormat:@"%@/Documents/%@/%@", NSHomeDirectory(), _category, path];
         [imageNames_ addObject:pathf];
+        NSLog(@"path:%@\n", pathf);
     }
-    NSLog(@"COUNT!!!!!:%d", [imageNames_ count]);
     DEBUG_LOG_NULL;
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 

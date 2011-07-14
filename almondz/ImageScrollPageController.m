@@ -40,6 +40,7 @@ static NSMutableArray *kControllers = nil;
 - (id)initWithImageNames:(NSMutableArray *)imageNames page:(int)page {
 
 	if ((self = [super init])) {
+
         
 	}
 	isEditing = NO;
@@ -52,7 +53,7 @@ static NSMutableArray *kControllers = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	DEBUG_LOG_NULL;
-    
+    _detailArray = [[NSMutableArray alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
 //    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
 //    _toolView = [array objectAtIndex:0];
 //    _toolView.center = CGPointMake(160, 400);
@@ -92,7 +93,7 @@ static NSMutableArray *kControllers = nil;
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
 	self.view.frame = self.view.superview.bounds;
-	self.currentPage = 0;
+//	self.currentPage = 0;
 	
 	viewControllers_ = [[NSMutableArray alloc] init];
 	for (int i=0; i<[imageNames_ count]; i++) {
@@ -121,6 +122,7 @@ static NSMutableArray *kControllers = nil;
     _toolView.center = CGPointMake(160, 400);
     _toolView.delegate = self;
     [self.view addSubview:_toolView];
+    _toolView.textView.text = [[_detailArray objectAtIndex:self.page] valueForKey:@"detail"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -168,6 +170,7 @@ static NSMutableArray *kControllers = nil;
 
 - (void)dealloc {
     [_category release];
+    [_detailArray release];
     [super dealloc];
 }
 
@@ -248,6 +251,10 @@ static NSMutableArray *kControllers = nil;
 	[self loadScrollViewWithPage:page + 1];
 	
 	self.currentPage = page;
+    if (page < [_detailArray count]) {
+        _toolView.textView.text = [[_detailArray objectAtIndex:page] valueForKey:@"detail"];
+    }
+
 }
 
 
@@ -429,7 +436,7 @@ static NSMutableArray *kControllers = nil;
     [UIView commitAnimations];
 }
 
-//- (void)endEditingWithString:(NSString *)string {
+- (void)endEditingWithString:(NSString *)string {
 //    [UIView beginAnimations:nil context:nil];
 //    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 //    [UIView setAnimationDuration:.3f];
@@ -438,7 +445,11 @@ static NSMutableArray *kControllers = nil;
 //    point.y += 250;
 //    _toolView.center = point;
 //    [UIView commitAnimations];
-//}
+    NSMutableDictionary *dic = [_detailArray objectAtIndex:[self currentPage]];
+    [dic setValue:string forKey:@"detail"];
+    [_detailArray replaceObjectAtIndex:[self currentPage] withObject:dic];
+    [_detailArray writeToFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]] atomically:YES];
+}
 
 #pragma mark - Alert Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -501,6 +512,8 @@ static NSMutableArray *kControllers = nil;
 //        [kImages removeObjectAtIndex:page];
         [viewControllers_ removeObjectAtIndex:page];
         [imageNames_ removeObjectAtIndex:page];
+        [_detailArray removeObjectAtIndex:[self currentPage]];
+        [_detailArray writeToFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]] atomically:YES];
 //        if (page == 0) {
 //            [self loadScrollViewWithPage:page];
 //            [self loadScrollViewWithPage:page + 1];

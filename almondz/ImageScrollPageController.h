@@ -29,6 +29,7 @@
     
     NSArray *_imagePathArray;
     
+    NSMutableArray *_detailArray;  //图片的详细信息
     BOOL isEditing;
 }
 

@@ -17,7 +17,7 @@
 @interface ToolView : UIView <UITextViewDelegate> {
     id <ToolViewDelegate> delegate;
     UIButton *_topButton;
-    UITextView *_textView;
+    UITextView *_textView;  //详细信息
     UIView *_bottomView;
     BOOL isDetailOpen;
 }

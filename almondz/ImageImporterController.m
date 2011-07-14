@@ -87,15 +87,28 @@
 
 #pragma mark - DialogView Delegate
 
-- (void)importImageswithCategory:(NSString *)categoryName {
+
+//根据把选择的照片保存到分类中
+- (void)importImageswithCategory:(NSString *)categoryName detial:(NSString *)detail {
+
     if ([categoryName isEqualToString:@""]) {
         return;
     }
     
     NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), categoryName];
+    NSString *detailFile = [NSString stringWithFormat:@"%@/Details.plist", path];
+
+
+    NSMutableArray *detailArray;
+
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:detailFile];
+    if ([array count])
+        detailArray = [[NSMutableArray alloc] initWithArray:array copyItems:YES];
+    else
+        detailArray = [[NSMutableArray alloc] init];
+    
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     
-    int sum = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] count];
     
     for (int i = 0; i < [_selectedImages count]; i++) {
         UIImage *image = [_selectedImages objectAtIndex:i];
@@ -103,8 +116,14 @@
         NSString *name = [Hash md5:date];
         NSData *imgData = UIImagePNGRepresentation(image);
         [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
-        sum++;
+//        NSDictionary *detailDic = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", detail?detail:@"", @"detail", nil];
+        NSDictionary *detailDic = [[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@.png", name], @"name", detail?detail:@"", @"detail", nil] retain];
+        [detailArray addObject:detailDic];
+        [detailDic release];
     }
+    [detailArray writeToFile:detailFile atomically:YES];
+    [_selectedImages removeAllObjects];
+    [detailArray release];
 }
 
 

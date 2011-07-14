@@ -81,16 +81,6 @@ static NSMutableArray *kImages = nil;
     
     _plistData = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
     
-//    UIImageView *subview = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@0.png", path, _category]]];
-//    
-//    if (subview) {
-//        [self.scrollView addSubview:subview];
-//    }
-//    [subview release];
-    
-    
-//    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:3.f target:self selector:@selector(hideAndShowToolView) userInfo:nil repeats:YES];
-//    [time fire];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideAndShowToolView)];
     [self.scrollView addGestureRecognizer:tap];

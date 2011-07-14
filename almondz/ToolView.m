@@ -96,8 +96,8 @@
     [delegate beginEditing];
 }
 
-//- (void)textViewDidEndEditing:(UITextView *)textView {
-//    [delegate endEditingWithString:textView.text];
-//    [textView resignFirstResponder];
-//}
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    [delegate endEditingWithString:textView.text];
+    [textView resignFirstResponder];
+}
 @end

@@ -10,7 +10,7 @@
 
 @protocol DialogViewDelegate <NSObject>
 
-- (void)importImageswithCategory:(NSString *)categoryName;
+- (void)importImageswithCategory:(NSString *)categoryName detial:(NSString *)detail;
 
 @end
 

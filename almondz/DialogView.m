@@ -79,6 +79,7 @@
 
 - (IBAction)closeWindows:(id)sender {
     self.alpha = 0.f;
+    [self closeKeyboard:nil];
 //    [self removeFromSuperview];
 }
 
@@ -88,7 +89,8 @@
 }
 
 - (IBAction)okButtonPressed:(id)sender {
-    [delegate importImageswithCategory:_textField.text];
+    [delegate importImageswithCategory:_textField.text detial:_detailTextField.text];
+    [self closeKeyboard:nil];
 //    [self removeFromSuperview];
     self.alpha = 0.f;
 }
