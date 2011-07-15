@@ -32,7 +32,7 @@
     NSMutableArray *_detailArray;  //图片的详细信息
     BOOL isEditing;
     
-    NSMutableArray *_theNamesArray; //仅图片名
+    NSMutableArray *_theNamesArray; //纯图片名
 }
 
 @property (nonatomic, retain) NSMutableArray *imageNames;

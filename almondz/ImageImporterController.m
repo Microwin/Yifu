@@ -28,6 +28,13 @@
     [UIView commitAnimations];
 }
 
+- (void)clearSelected {
+    if (_selectedImages) {
+        [_selectedImages removeAllObjects];
+    }
+    [self updateToolBarInfo];
+}
+
 - (id)init {
     if ((self = [super init])) {
         _selectedImages = [[NSMutableArray alloc] init];
@@ -39,7 +46,8 @@
         UIBarButtonItem *okButton = [[UIBarButtonItem alloc] initWithTitle:@"导入" style:UIBarButtonItemStyleDone target:self action:@selector(showDialogView)];
         
         _imageNumber = 0;
-
+        
+        UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"清零" style:UIBarButtonItemStyleBordered target:self action:@selector(clearSelected)];
         
         NSString *info = [NSString stringWithFormat:@"您选择了%d张照片", _imageNumber];
         _imageSelectedInfo = [[UIButton alloc] initWithFrame:CGRectMake(12, 7, 149, 31)];
@@ -50,12 +58,13 @@
         
         UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        [toolBar setItems:[NSArray arrayWithObjects:imageInfo, flex, okButton, nil] animated:YES];
+        [toolBar setItems:[NSArray arrayWithObjects:clearButton, flex, imageInfo, flex, okButton, nil] animated:YES];
         [toolBar release];
         
         [flex release];
         [imageInfo release];
         [okButton release];
+        [clearButton release];
         
         //DialogView
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
@@ -71,6 +80,7 @@
     return self;
 }
 
+//更新toolbar上的文字信息
 - (void)updateToolBarInfo {
     NSString *info = [NSString stringWithFormat:@"您选择了%d张照片", [_selectedImages count]];
     [_imageSelectedInfo setTitle:info forState:UIControlStateNormal];
@@ -117,12 +127,12 @@
         NSData *imgData = UIImagePNGRepresentation(image);
         [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
 //        NSDictionary *detailDic = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", detail?detail:@"", @"detail", nil];
-        NSDictionary *detailDic = [[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@.png", name], @"name", detail?detail:@"", @"detail", nil] retain];
+        NSDictionary *detailDic = [[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@.png", name], @"name", detail?detail:@"点击以修改详细信息", @"detail", nil] retain];
         [detailArray addObject:detailDic];
         [detailDic release];
     }
     [detailArray writeToFile:detailFile atomically:YES];
-    [_selectedImages removeAllObjects];
+    [self clearSelected];
     [detailArray release];
 }
 

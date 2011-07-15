@@ -46,20 +46,29 @@ static NSMutableArray *kControllers = nil;
 	isEditing = NO;
 	self.imageNames = imageNames;
 	self.page = page;
-	
+//	if (_theNamesArray == nil) {
+//        _theNamesArray = [[NSMutableArray alloc] init];
+//    }
+//
+//    for (NSString *str in imageNames_) {
+//        NSUInteger begin = [str length] - 36;
+//        NSString *theName = [str substringFromIndex:begin];
+//        [_theNamesArray addObject:theName];
+//    }
 	return self;
 }
 
 - (void)updateNamesArray {
-    NSArray *array = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
+//    NSArray *array = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
     if (_theNamesArray == nil) {
         _theNamesArray = [[NSMutableArray alloc] init];
     }
     else
         [_theNamesArray removeAllObjects];
-    for (NSDictionary *dic in array) {
-        NSString *name = [dic valueForKey:@"name"];
-        [_theNamesArray addObject:name];
+    for (NSString *str in imageNames_) {
+        NSUInteger begin = [str length] - 36;
+        NSString *theName = [str substringFromIndex:begin];
+        [_theNamesArray addObject:theName];
     }
 }
 
@@ -147,7 +156,12 @@ static NSMutableArray *kControllers = nil;
     _toolView.center = CGPointMake(160, 400);
     _toolView.delegate = self;
     [self.view addSubview:_toolView];
-    _toolView.textView.text = [[_detailArray objectAtIndex:self.page] valueForKey:@"detail"];
+    for (NSDictionary *dic in _detailArray) {
+        if ([[dic valueForKey:@"name"] isEqualToString:[_theNamesArray objectAtIndex:[self currentPage]]]) {
+            _toolView.textView.text = [dic valueForKey:@"detail"];
+        }
+    }
+//    _toolView.textView.text = [[_detailArray objectAtIndex:self.page] valueForKey:@"detail"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -278,7 +292,13 @@ static NSMutableArray *kControllers = nil;
 	
 	self.currentPage = page;
     if (page < [_detailArray count]) {
-        _toolView.textView.text = [[_detailArray objectAtIndex:page] valueForKey:@"detail"];
+//        _toolView.textView.text = [[_detailArray objectAtIndex:page] valueForKey:@"detail"];
+        for (NSDictionary *dic in _detailArray) {
+            if ([[dic valueForKey:@"name"] isEqualToString:[_theNamesArray objectAtIndex:page]]) {
+                _toolView.textView.text = [dic valueForKey:@"detail"];
+                break;
+            }
+        }
     }
 
 }

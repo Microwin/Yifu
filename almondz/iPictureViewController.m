@@ -172,7 +172,7 @@ static NSMutableArray *kImages = nil;
     [picker setMessageBody:@"I share you this nice image from iFashion." isHTML:NO];
     
 
-    [picker addAttachmentData:UIImagePNGRepresentation([self currentImage]) mimeType:@"png" fileName:@"SharePicture"];
+    [picker addAttachmentData:UIImagePNGRepresentation([self currentImage]) mimeType:@"image/png" fileName:@"SharePicture.png"];
     picker.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:picker animated:YES];
     [picker release];
