@@ -14,7 +14,7 @@
 
 @interface ImageScrollPageController : UIViewController<UIScrollViewDelegate, ToolViewDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate> {
 	
-	NSMutableArray *imageNames_;
+	NSMutableArray *imageNames_;    //图片完整路径和名字
 	NSInteger page_;
 
 	NSMutableArray *viewControllers_;  //array of pages
@@ -31,6 +31,8 @@
     
     NSMutableArray *_detailArray;  //图片的详细信息
     BOOL isEditing;
+    
+    NSMutableArray *_theNamesArray; //仅图片名
 }
 
 @property (nonatomic, retain) NSMutableArray *imageNames;
@@ -45,6 +47,6 @@
 
 - (id)initWithImageNames:(NSMutableArray *)imageNames page:(int)page;
 - (void)loadScrollViewWithPage:(int)page;
-
+- (NSString *)currentPath;
 
 @end

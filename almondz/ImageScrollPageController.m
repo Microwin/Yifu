@@ -50,10 +50,35 @@ static NSMutableArray *kControllers = nil;
 	return self;
 }
 
+- (void)updateNamesArray {
+    NSArray *array = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
+    if (_theNamesArray == nil) {
+        _theNamesArray = [[NSMutableArray alloc] init];
+    }
+    else
+        [_theNamesArray removeAllObjects];
+    for (NSDictionary *dic in array) {
+        NSString *name = [dic valueForKey:@"name"];
+        [_theNamesArray addObject:name];
+    }
+}
+
+- (void)updateDetails {
+    if (_detailArray == nil) {
+        _detailArray = [[NSMutableArray alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
+    }
+    else {
+        [_detailArray removeAllObjects];
+        _detailArray = [NSMutableArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	DEBUG_LOG_NULL;
-    _detailArray = [[NSMutableArray alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
+//    _detailArray = [[NSMutableArray alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
+    [self updateDetails];
+    [self updateNamesArray];
 //    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
 //    _toolView = [array objectAtIndex:0];
 //    _toolView.center = CGPointMake(160, 400);
@@ -171,6 +196,7 @@ static NSMutableArray *kControllers = nil;
 - (void)dealloc {
     [_category release];
     [_detailArray release];
+    [_theNamesArray release];
     [super dealloc];
 }
 
@@ -377,7 +403,9 @@ static NSMutableArray *kControllers = nil;
 //当前是第几页
 - (NSInteger)currentPage {
     CGPoint point = self.scrollView.contentOffset;
-    NSUInteger page = point.x / 320;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    int width = screenRect.size.width;
+    NSUInteger page = point.x / width;
     return page;
 }
 #pragma mark - Mail Delegate
@@ -437,18 +465,32 @@ static NSMutableArray *kControllers = nil;
 }
 
 - (void)endEditingWithString:(NSString *)string {
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-//    [UIView setAnimationDuration:.3f];
-//    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
-//    CGPoint point = _toolView.center;
-//    point.y += 250;
-//    _toolView.center = point;
-//    [UIView commitAnimations];
-    NSMutableDictionary *dic = [_detailArray objectAtIndex:[self currentPage]];
-    [dic setValue:string forKey:@"detail"];
-    [_detailArray replaceObjectAtIndex:[self currentPage] withObject:dic];
-    [_detailArray writeToFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]] atomically:YES];
+    NSString *name = [_theNamesArray objectAtIndex:[self currentPage]];
+    NSMutableDictionary *dic;
+    int i = 0;
+    for (i = 0; i < [_detailArray count]; i++) {
+        dic = [_detailArray objectAtIndex:i];
+        if ([[dic valueForKey:@"name"] isEqualToString:name]) {
+            break;
+        }
+    }
+//    for (NSDictionary *dict in _detailArray) {
+//        if ([[dict valueForKey:@"name"] isEqualToString:name]) {
+//            dic = (NSMutableDictionary *)dict;
+//            break;
+//        }
+//    }
+//    NSMutableDictionary *dic = [_detailArray objectAtIndex:[self currentPage]];
+    if (dic) {
+        [dic setValue:string forKey:@"detail"];
+        //    [_detailArray replaceObjectAtIndex:[self currentPage] withObject:dic];
+        [_detailArray replaceObjectAtIndex:i withObject:dic];
+        [_detailArray writeToFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]] atomically:YES];
+//        [self updateDetails];
+    }
+    else
+        return;
+
 }
 
 #pragma mark - Alert Delegate
@@ -514,6 +556,11 @@ static NSMutableArray *kControllers = nil;
         [imageNames_ removeObjectAtIndex:page];
         [_detailArray removeObjectAtIndex:[self currentPage]];
         [_detailArray writeToFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]] atomically:YES];
+        [self updateNamesArray];
+        if (page < [_detailArray count]) {
+            _toolView.textView.text = [[_detailArray objectAtIndex:page] valueForKey:@"detail"];
+        }
+//        [self updateDetails];
 //        if (page == 0) {
 //            [self loadScrollViewWithPage:page];
 //            [self loadScrollViewWithPage:page + 1];
