@@ -8,11 +8,16 @@
 
 #import "ImageImporterController.h"
 #import "Hash.h"
+#import "ImageSavingOperation.h"
 
 @implementation ImageImporterController
 @synthesize dialogView = _dialogView;
 @synthesize imageNumber = _imageNumber;
 @synthesize selectedImages = _selectedImages;
+
+static UIActionSheet *kProgressSheet = nil;
+static UIProgressView *kProgressView = nil;
+static float kProgressValue = 0.f;
 //显示导入对话框
 - (void)showDialogView {
 //    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
@@ -37,6 +42,9 @@
 
 - (id)init {
     if ((self = [super init])) {
+        _saveQueue = [[NSOperationQueue alloc] init];
+        
+        
         _selectedImages = [[NSMutableArray alloc] init];
         
         UIToolbar *toolBar = [[UIToolbar alloc] init];
@@ -119,22 +127,56 @@
     
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     
+    UIActionSheet *progressSheet = [[UIActionSheet alloc] initWithTitle:@"正在导入图片..." delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    progressSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    CGRect progressViewFrame = progressView.frame;
+    progressViewFrame.size.width = [[UIScreen mainScreen] bounds].size.width;
+    progressView.frame = progressViewFrame;
+    kProgressView = progressView;
+    kProgressSheet = progressSheet;
+    progressView.progress = 0;
+    [progressSheet addSubview:progressView];
+    [progressView release];
+    [progressSheet showInView:self.view];
+    [progressSheet release];
+    
+    kProgressValue = 1.f / (float)[_selectedImages count];
     
     for (int i = 0; i < [_selectedImages count]; i++) {
         UIImage *image = [_selectedImages objectAtIndex:i];
         NSString *date = [NSString stringWithFormat:@"%@%d", [[NSDate date] description], i];
         NSString *name = [Hash md5:date];
-        NSData *imgData = UIImagePNGRepresentation(image);
-        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
-//        NSDictionary *detailDic = [NSDictionary dictionaryWithObjectsAndKeys:name, @"name", detail?detail:@"", @"detail", nil];
-        NSDictionary *detailDic = [[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@.png", name], @"name", detail?detail:@"点击以修改详细信息", @"detail", nil] retain];
-        [detailArray addObject:detailDic];
-        [detailDic release];
+//        NSData *imgData = UIImagePNGRepresentation(image);
+//        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
+//        NSDictionary *detailDic = [[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@.png", name], @"name", detail?detail:@"点击以修改详细信息", @"detail", nil] retain];
+//        [detailArray addObject:detailDic];
+//        [detailDic release];
+        
+        ImageSavingOperation *operation = [[[ImageSavingOperation alloc] init] autorelease];
+//        operation.progressValue = 1 / [_selectedImages count];
+        operation.image = image;
+        operation.path = path;
+        operation.name = name;
+        operation.parent = self;
+        [_saveQueue addOperation:operation];
     }
-    [detailArray writeToFile:detailFile atomically:YES];
+//    [detailArray writeToFile:detailFile atomically:YES];
     [self clearSelected];
     [detailArray release];
 }
 
+- (void)changeImportProgress {
+    if (kProgressValue > 0) {
+        kProgressView.progress += kProgressValue;
+        NSLog(@"Progress:%f", kProgressView.progress);
+    }
+    if (kProgressView.progress + kProgressValue > 1.f) {
+        [kProgressSheet dismissWithClickedButtonIndex:0 animated:YES];
+        kProgressSheet = nil;
+        kProgressValue = 0.f;
+        kProgressView = nil;
+    }
+}
 
 @end

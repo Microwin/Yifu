@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "DialogView.h"
-@interface ImageImporterController : UIImagePickerController <DialogViewDelegate> {
+@interface ImageImporterController : UIImagePickerController <DialogViewDelegate, UIActionSheetDelegate> {
     DialogView *_dialogView;
     NSInteger _imageNumber;
     UIButton *_imageSelectedInfo;
     NSMutableArray *_selectedImages;
+    NSOperationQueue *_saveQueue;
 }
 @property (nonatomic, retain) DialogView *dialogView;
 @property (nonatomic, assign) NSInteger imageNumber;

@@ -58,6 +58,7 @@ static NSString *kCategory = nil;   //通知传过来的category
 
 - (void)imagePickerController:(ImageImporterController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSLog(@"ORITATION:%d", [img imageOrientation]);
     [picker.selectedImages addObject:img];
     [picker updateToolBarInfo];
     

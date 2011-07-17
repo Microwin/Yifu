@@ -8,7 +8,7 @@
 
 #import "ImageBrowseController.h"
 #import "ImageScrollPageController.h"
-
+#import "GenerateThumbnailOperation.h"
 @implementation ImageBrowseController
 
 @synthesize imageNames = imageNames_;
@@ -29,6 +29,7 @@
 
 - (id)initWithImageNames:(NSMutableArray *)imageNames {
 	if ((self = [super init])) {
+        _dealImageQueue = [[NSOperationQueue alloc] init];
 	}
 	self.imageNames  = imageNames;
 //    imageNames_ = [[NSMutableArray alloc] init];
@@ -100,6 +101,9 @@
     NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category] error:nil];
     for (NSString *path in array) {
         if ([path isEqualToString:@"Details.plist"]) {
+            continue;
+        }
+        if ([path rangeOfString:@".thumbnail"].length > 0) {
             continue;
         }
         NSString *pathf = [NSString stringWithFormat:@"%@/Documents/%@/%@", NSHomeDirectory(), _category, path];
@@ -210,9 +214,22 @@
             
             NSString *imagePath = [imageNames_ objectAtIndex:indexPath.row*itemsNumPerRow+i];
             //DEBUG_LOG_VALUE(imagePath, %@);
-            UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+//            UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+            
+            NSString *thumbnailPath = [NSString stringWithFormat:@"%@.thumbnail", imagePath];
+            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailPath];
+
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-            imageView.image = image;
+            if (thumbnailImage) {
+                imageView.image = thumbnailImage;
+            }
+            else {
+                GenerateThumbnailOperation *generate = [[[GenerateThumbnailOperation alloc] initWithImagePath:imagePath thumbnailPath:thumbnailPath] autorelease];
+                generate.parent = self.tableView;
+                [_dealImageQueue addOperation:generate];
+            }
+//            imageView.image = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, CGRectMake(0, 0, 80, 80))];
+//            imageView.image = image;
             imageView.contentMode = UIViewContentModeScaleAspectFit;
 
             
@@ -315,6 +332,7 @@
 
 - (void)dealloc {
     [_category release];
+    [_dealImageQueue release];
     [super dealloc];
 }
 

@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ImageImporterController.h"
 
-@interface ImageBrowseController : UITableViewController <UIImagePickerControllerDelegate> {
+@interface ImageBrowseController : UITableViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
 
 	NSMutableArray *imageNames_;
 	BOOL isCurrentPortrait_;
     NSString *_category;
+    
+    NSOperationQueue *_dealImageQueue;
 }
 
 @property (nonatomic, retain) NSMutableArray *imageNames;

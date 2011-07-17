@@ -527,7 +527,8 @@ static NSMutableArray *kControllers = nil;
         NSLog(@"PATH:%@", str);
         
         [[NSFileManager defaultManager] removeItemAtPath:str error:nil];
-        
+        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@.thumbnail", str] error:nil];
+
 //        ImageOperController *controller = [viewControllers_ objectAtIndex:[self currentPage]];
 //        
 //        [controller.view removeFromSuperview];

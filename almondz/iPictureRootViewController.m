@@ -226,6 +226,12 @@
     for (NSString *str in nameArray) {
         NSLog(@"Path::%@", str);
 //        UIImage *img = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", path, str]];
+        if ([str rangeOfString:@".thumbnail"].length > 0) {
+            continue;
+        }
+        if ([str isEqualToString:@"Details.plist"]) {
+            continue;
+        }
         NSString *fullPath = [NSString stringWithFormat:@"%@/%@", path, str];
         [array addObject:fullPath];
     }
