@@ -158,6 +158,7 @@ static float kProgressValue = 0.f;
         operation.image = image;
         operation.path = path;
         operation.name = name;
+        operation.detail = detail;
         operation.parent = self;
         [_saveQueue addOperation:operation];
     }
