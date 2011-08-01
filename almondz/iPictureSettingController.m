@@ -46,22 +46,56 @@ static NSString *kCategory = nil;   //通知传过来的category
 
 //打开UIImagePickerController
 - (IBAction)launchImagerImporter:(id)sender {	
-    ImageImporterController *pickerController = [[ImageImporterController alloc] init];
+    ImageImporterController *pickerController = [[ImageImporterController alloc] initWithCamera:NO];
     //kPicker = pickerController;
     pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     pickerController.delegate = self;
+    pickerController.isUsingCamera = NO;
     [self presentModalViewController:pickerController animated:YES];
     [pickerController release];
+}
+
+- (IBAction)launchCameraImporter:(id)sender {
+//    ImageImporterController *cameraController = [[ImageImporterController alloc] init];
+//    cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+//    cameraController.delegate = self;
+//    [self presentModalViewController:cameraController animated:YES];
+//    [cameraController release];
+    if ([ImageImporterController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        ImageImporterController *picker = [[ImageImporterController alloc] initWithCamera:YES];
+        picker.delegate = self;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.isUsingCamera = YES;
+        [self presentModalViewController:picker animated:YES];
+        [picker release];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您的设备不支持照相机" message:nil delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    }
+
 }
 
 #pragma mark - UIImagePickerController delegate
 
 - (void)imagePickerController:(ImageImporterController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
+    if (img.imageOrientation == UIImageOrientationLeft) {
+        CGAffineTransform t = CGAffineTransformMakeRotation(M_PI / 2);
+        
+    }
     NSLog(@"ORITATION:%d", [img imageOrientation]);
     [picker.selectedImages addObject:img];
-    [picker updateToolBarInfo];
     
+    
+    if (!picker.isUsingCamera) {
+        [picker updateToolBarInfo];
+    }
+    else {
+        [picker showDialogView];
+    }
+
 }
 
 - (void)imagePickerControllerDidCancel:(ImageImporterController *)picker {
@@ -88,7 +122,7 @@ static NSString *kCategory = nil;   //通知传过来的category
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+        imprterType = ImporterTypeNone;
         //注册为通知观察者
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCategory:) name:@"CategoryTyped" object:nil];
     }

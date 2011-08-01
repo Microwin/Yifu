@@ -14,17 +14,13 @@
 @synthesize dialogView = _dialogView;
 @synthesize imageNumber = _imageNumber;
 @synthesize selectedImages = _selectedImages;
-
+@synthesize isUsingCamera = _isUsingCamera;
 static UIActionSheet *kProgressSheet = nil;
 static UIProgressView *kProgressView = nil;
 static float kProgressValue = 0.f;
 //显示导入对话框
 - (void)showDialogView {
-//    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
-//    _dialogView = [array objectAtIndex:0];
-//    CGPoint point = CGPointMake(160, 200);
-//    _dialogView.center = point;
-//    [self.view addSubview:_dialogView];
+
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:.5f];
@@ -40,39 +36,47 @@ static float kProgressValue = 0.f;
     [self updateToolBarInfo];
 }
 
-- (id)init {
+- (id)initWithCamera:(BOOL)isUsingCamera {
     if ((self = [super init])) {
         _saveQueue = [[NSOperationQueue alloc] init];
         
         
         _selectedImages = [[NSMutableArray alloc] init];
-        
-        UIToolbar *toolBar = [[UIToolbar alloc] init];
-        toolBar.barStyle = UIBarStyleBlackTranslucent;
-        toolBar.frame = CGRectMake(0, 436, 320, 44);
-        [self.view addSubview:toolBar];
-        UIBarButtonItem *okButton = [[UIBarButtonItem alloc] initWithTitle:@"导入" style:UIBarButtonItemStyleDone target:self action:@selector(showDialogView)];
-        
-        _imageNumber = 0;
-        
-        UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"清零" style:UIBarButtonItemStyleBordered target:self action:@selector(clearSelected)];
-        
-        NSString *info = [NSString stringWithFormat:@"您选择了%d张照片", _imageNumber];
-        _imageSelectedInfo = [[UIButton alloc] initWithFrame:CGRectMake(12, 7, 149, 31)];
-        [_imageSelectedInfo setTitle:info forState:UIControlStateNormal];
-        _imageSelectedInfo.userInteractionEnabled = NO;
-        UIBarButtonItem *imageInfo = [[UIBarButtonItem alloc] initWithCustomView:_imageSelectedInfo];
+        if (!isUsingCamera) {
+            UIToolbar *toolBar = [[UIToolbar alloc] init];
+            toolBar.barStyle = UIBarStyleBlackTranslucent;
+            toolBar.frame = CGRectMake(0, 436, 320, 44);
+            [self.view addSubview:toolBar];
+            UIBarButtonItem *okButton = [[UIBarButtonItem alloc] initWithTitle:@"导入" style:UIBarButtonItemStyleDone target:self action:@selector(showDialogView)];
+            
+            _imageNumber = 0;
+            
+            UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"清零" style:UIBarButtonItemStyleBordered target:self action:@selector(clearSelected)];
+            
+            NSString *info = [NSString stringWithFormat:@"您选择了%d张照片", _imageNumber];
+            _imageSelectedInfo = [[UIButton alloc] initWithFrame:CGRectMake(12, 7, 149, 31)];
+            [_imageSelectedInfo setTitle:info forState:UIControlStateNormal];
+            _imageSelectedInfo.userInteractionEnabled = NO;
+            UIBarButtonItem *imageInfo = [[UIBarButtonItem alloc] initWithCustomView:_imageSelectedInfo];
+            
+            
+            UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            
+            [toolBar setItems:[NSArray arrayWithObjects:clearButton, flex, imageInfo, flex, okButton, nil] animated:YES];
+            [toolBar release];
+            [flex release];
+            [imageInfo release];
+            [okButton release];
+            [clearButton release];
 
+        }
+        else {
+            
+            
+        }
         
-        UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        
-        [toolBar setItems:[NSArray arrayWithObjects:clearButton, flex, imageInfo, flex, okButton, nil] animated:YES];
-        [toolBar release];
-        
-        [flex release];
-        [imageInfo release];
-        [okButton release];
-        [clearButton release];
+                
+
         
         //DialogView
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"DialogView" owner:self options:nil];
@@ -147,14 +151,7 @@ static float kProgressValue = 0.f;
         UIImage *image = [_selectedImages objectAtIndex:i];
         NSString *date = [NSString stringWithFormat:@"%@%d", [[NSDate date] description], i];
         NSString *name = [Hash md5:date];
-//        NSData *imgData = UIImagePNGRepresentation(image);
-//        [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", path, name] atomically:YES];
-//        NSDictionary *detailDic = [[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@.png", name], @"name", detail?detail:@"点击以修改详细信息", @"detail", nil] retain];
-//        [detailArray addObject:detailDic];
-//        [detailDic release];
-        
         ImageSavingOperation *operation = [[[ImageSavingOperation alloc] init] autorelease];
-//        operation.progressValue = 1 / [_selectedImages count];
         operation.image = image;
         operation.path = path;
         operation.name = name;
@@ -162,7 +159,6 @@ static float kProgressValue = 0.f;
         operation.parent = self;
         [_saveQueue addOperation:operation];
     }
-//    [detailArray writeToFile:detailFile atomically:YES];
     [self clearSelected];
     [detailArray release];
 }
@@ -177,6 +173,9 @@ static float kProgressValue = 0.f;
         kProgressSheet = nil;
         kProgressValue = 0.f;
         kProgressView = nil;
+    }
+    if (_isUsingCamera) {
+        [self dismissModalViewControllerAnimated:YES];
     }
 }
 

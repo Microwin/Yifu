@@ -7,7 +7,7 @@
 //
 
 #import "ImageSavingOperation.h"
-
+#import "RotateUIImage.h"
 
 @implementation ImageSavingOperation
 @synthesize path = _path;
@@ -19,8 +19,11 @@
 @synthesize parent;
 @synthesize progressValue;
 
+
+
 - (void)main {
-    NSData *imgData = UIImagePNGRepresentation(_image);
+    UIImage *img = [UIImage rotateImage:_image];
+    NSData *imgData = UIImagePNGRepresentation(img);
     [imgData writeToFile:[NSString stringWithFormat:@"%@/%@.png", _path, _name] atomically:YES];
     
     NSString *detailFile = [NSString stringWithFormat:@"%@/Details.plist", _path];
@@ -37,6 +40,7 @@
     [parent performSelectorOnMainThread:@selector(changeImportProgress) withObject:nil waitUntilDone:YES];
     [parent performSelectorOnMainThread:@selector(clearSelected) withObject:nil waitUntilDone:YES];
 }
+
 
 - (void)dealloc {
     [_path release];

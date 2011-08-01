@@ -27,4 +27,6 @@
 @property (nonatomic, retain) NSMutableArray *imagesArray;
 @property (nonatomic, retain) id parent;
 @property (nonatomic, assign) float progressValue;
+
+
 @end

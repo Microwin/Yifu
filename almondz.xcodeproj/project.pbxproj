@@ -82,6 +82,7 @@
 		41A34B2813913F9C00715CB4 /* iPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A34B2613913F9C00715CB4 /* iPictureViewController.m */; };
 		41A34B2913913F9C00715CB4 /* iPictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A34B2713913F9C00715CB4 /* iPictureViewController.xib */; };
 		41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */; };
+		A92D49B413E6C9DC00A311C4 /* RotateUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A92D49B313E6C9DC00A311C4 /* RotateUIImage.m */; };
 		A9473CDA13BDD01D00B905E6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9473CD913BDD01D00B905E6 /* MessageUI.framework */; };
 		A9473CE613BDF15900B905E6 /* Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = A9473CE513BDF15900B905E6 /* Hash.m */; };
 		A95880E113D2B9BE00EA1365 /* GenerateThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A95880E013D2B9BE00EA1365 /* GenerateThumbnailOperation.m */; };
@@ -191,6 +192,8 @@
 		41A34B2613913F9C00715CB4 /* iPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPictureViewController.m; sourceTree = "<group>"; };
 		41A34B2713913F9C00715CB4 /* iPictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureViewController.xib; sourceTree = "<group>"; };
 		41BA458F13B5FEBC00EA41B1 /* iPictureTabbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureTabbarViewController.xib; sourceTree = "<group>"; };
+		A92D49B213E6C9DC00A311C4 /* RotateUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotateUIImage.h; sourceTree = "<group>"; };
+		A92D49B313E6C9DC00A311C4 /* RotateUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotateUIImage.m; sourceTree = "<group>"; };
 		A9473CD913BDD01D00B905E6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A9473CE413BDF15900B905E6 /* Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
 		A9473CE513BDF15900B905E6 /* Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hash.m; sourceTree = "<group>"; };
@@ -474,6 +477,8 @@
 				4120C4BE13B4AC5900E8A553 /* DialogView.xib */,
 				A99E512F13D18AB800D01B5C /* ImageSavingOperation.h */,
 				A99E513013D18AB800D01B5C /* ImageSavingOperation.m */,
+				A92D49B213E6C9DC00A311C4 /* RotateUIImage.h */,
+				A92D49B313E6C9DC00A311C4 /* RotateUIImage.m */,
 			);
 			name = ImageImporterController;
 			sourceTree = "<group>";
@@ -644,6 +649,7 @@
 				A9BE52FF13CDD82C0052D1B5 /* ImageImporterController.m in Sources */,
 				A99E513113D18AB800D01B5C /* ImageSavingOperation.m in Sources */,
 				A95880E113D2B9BE00EA1365 /* GenerateThumbnailOperation.m in Sources */,
+				A92D49B413E6C9DC00A311C4 /* RotateUIImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
