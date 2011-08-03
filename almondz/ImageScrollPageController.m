@@ -144,9 +144,9 @@ static NSMutableArray *kControllers = nil;
 	scrollView_.autoresizesSubviews = YES;
 	scrollView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 //	scrollView_.backgroundColor = [UIColor blackColor];
-	[self loadScrollViewWithPage:self.page-1];
+	//[self loadScrollViewWithPage:self.page-1];
 	[self loadScrollViewWithPage:self.page];
-	[self loadScrollViewWithPage:self.page+1];
+	//[self loadScrollViewWithPage:self.page+1];
 	
 	[self.scrollView setContentOffset:CGPointMake(self.page*self.scrollView.frame.size.width, 0) animated:NO];
 	[self.view addSubview:scrollView_];
@@ -283,7 +283,7 @@ static NSMutableArray *kControllers = nil;
 	DEBUG_LOG_VALUE(NSStringFromCGRect(scrollView.bounds), %@); 
 	
 	//当前页
-	CGFloat pageWidth = scrollView.frame.size.width;
+	//CGFloat pageWidth = scrollView.frame.size.width;
 //	int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     int page = [self currentPage];
 	[self loadScrollViewWithPage:page - 1];
