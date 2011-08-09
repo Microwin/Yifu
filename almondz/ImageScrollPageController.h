@@ -33,6 +33,8 @@
     BOOL isEditing;
     
     NSMutableArray *_theNamesArray; //纯图片名
+    
+    NSOperationQueue *_generateImageQueue;
 }
 
 @property (nonatomic, retain) NSMutableArray *imageNames;

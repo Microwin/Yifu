@@ -13,8 +13,8 @@
 #import "ImageBrowseController.h"
 @implementation iPictureRootViewController
 
-//@synthesize categoryArray = _categoryArray;
-@synthesize plistKey = _plistKey;
+@synthesize categoryArray = _categoryArray;
+//@synthesize plistKey = _plistKey;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -54,7 +54,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
+//    _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
     
     
     self.tableView.rowHeight = 60;  //根据类别数量配置行高
@@ -83,19 +83,27 @@
 //    NSString *path = [NSString stringWithFormat:@"%@/Documents", NSHomeDirectory()];
 //    _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] copy];
     
-    if ([_categoryArray count] > 0) {
+    if (!_categoryArray) {
+        _categoryArray = [[NSMutableArray alloc] init];
+    }
+    else
         [_categoryArray removeAllObjects];
-        _categoryArray = nil;
-        [_categoryArray release];
-        _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
-        [self.tableView reloadData];
-    }
-    else {
-        _categoryArray = nil;
-        [_categoryArray release];
-        _categoryArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil] retain];
-        [self.tableView reloadData];
-    }
+    
+    [_categoryArray addObjectsFromArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil]];
+    
+//    if ([_categoryArray count] > 0) {
+//        [_categoryArray removeAllObjects];
+//        _categoryArray = nil;
+//        [_categoryArray release];
+//        _categoryArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil];
+//        [self.tableView reloadData];
+//    }
+//    else {
+//        _categoryArray = nil;
+//        [_categoryArray release];
+//        _categoryArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] error:nil];
+//        [self.tableView reloadData];
+//    }
 //    [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
@@ -216,16 +224,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
         
-//    iPictureViewController *iPictureShowController = [[iPictureViewController alloc] init]; 
-//    iPictureShowController.category = [_categoryArray objectAtIndex:indexPath.row];
-//    [self.navigationController pushViewController:iPictureShowController animated:YES];
-//    [iPictureShowController release];
     NSString *path = [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), [_categoryArray objectAtIndex:indexPath.row]];
     NSArray *nameArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSString *str in nameArray) {
         NSLog(@"Path::%@", str);
-//        UIImage *img = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", path, str]];
+
         if ([str rangeOfString:@".thumbnail"].length > 0) {
             continue;
         }
@@ -236,8 +240,6 @@
         [array addObject:fullPath];
     }
     ImageBrowseController *imgBrower = [[ImageBrowseController alloc] initWithImageNames:array];
-//    ImageBrowseController *imgBrower = [[ImageBrowseController alloc] init];
-
     imgBrower.category = [_categoryArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:imgBrower animated:YES];
     [array release];

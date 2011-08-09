@@ -39,6 +39,7 @@
     NSLog(@"SAVEDSAVED");
     [parent performSelectorOnMainThread:@selector(changeImportProgress) withObject:nil waitUntilDone:YES];
     [parent performSelectorOnMainThread:@selector(clearSelected) withObject:nil waitUntilDone:YES];
+    [detailArray release];
 }
 
 

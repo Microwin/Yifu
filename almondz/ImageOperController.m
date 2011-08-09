@@ -68,7 +68,8 @@
 	imageView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	
 	[self.view addSubview:imageView_];
-	
+	[image release];
+    [imageView_ release];
 	[self createGestureRecognizers];
 	[self setInitialStatus];
     
@@ -143,6 +144,7 @@
 }
 
 - (void)dealloc {
+    [imageName_ release];
     [super dealloc];
 }
 
@@ -179,18 +181,20 @@
 					action:@selector(handleSingleDoubleTap:)];
     tapGestrue_.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:tapGestrue_];
-	
+	[tapGestrue_ release];
+    
 	//拖拉手势
     panGesture_ = [[UIPanGestureRecognizer alloc]
 				  initWithTarget:self
 				  action:@selector(handlePanGesture:)];
     //[self.view addGestureRecognizer:panGesture_];
-	
+	[pinchGesture_ release];
 	//放大缩小手势
     pinchGesture_ = [[UIPinchGestureRecognizer alloc]
 					  initWithTarget:self 
 					  action:@selector(handlePinchGesture:)];
     [self.view addGestureRecognizer:pinchGesture_];
+    [pinchGesture_ release];
 }
 
 

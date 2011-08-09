@@ -32,7 +32,8 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 
 static NSMutableArray *kImages = nil;
-static NSMutableArray *kControllers = nil;
+//static NSMutableArray *kControllers = nil;
+
 - (NSString *)currentPath {
     return [NSString stringWithFormat:@"%@/Documents/%@", NSHomeDirectory(), _category];
 }
@@ -84,6 +85,8 @@ static NSMutableArray *kControllers = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _generateImageQueue = [[NSOperationQueue alloc] init];
 	DEBUG_LOG_NULL;
 //    _detailArray = [[NSMutableArray alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/Details.plist", [self currentPath]]];
     [self updateDetails];
@@ -145,11 +148,13 @@ static NSMutableArray *kControllers = nil;
 	scrollView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 //	scrollView_.backgroundColor = [UIColor blackColor];
 	//[self loadScrollViewWithPage:self.page-1];
-	[self loadScrollViewWithPage:self.page];
+	//[self loadScrollViewWithPage:self.page];
+
 	//[self loadScrollViewWithPage:self.page+1];
 	
 	[self.scrollView setContentOffset:CGPointMake(self.page*self.scrollView.frame.size.width, 0) animated:NO];
 	[self.view addSubview:scrollView_];
+    [scrollView_ release];
     
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ToolView" owner:self options:nil];
     _toolView = [array objectAtIndex:0];
@@ -208,6 +213,8 @@ static NSMutableArray *kControllers = nil;
 }
 
 - (void)dealloc {
+//    [kControllers release];
+    [_generateImageQueue release];
     [_category release];
     [_detailArray release];
     [_theNamesArray release];
@@ -264,14 +271,25 @@ static NSMutableArray *kControllers = nil;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideNavbar)];
         [controller.view addGestureRecognizer:tap];
         [tap release];
-        [scrollView_ addSubview:controller.view];
+        [scrollView_ performSelectorOnMainThread:@selector(addSubview:) withObject:controller.view waitUntilDone:YES];
+        //[scrollView_ addSubview:controller.view];
     }
 	
 	[controller setInitialStatus];
-    if (!kControllers) {
-        kControllers = [[NSMutableArray alloc] init];
-    }
-    [kControllers addObject:controller];
+    
+//    controller = [viewControllers_ objectAtIndex:page + 2];
+//    if (controller) {
+//        [viewControllers_ replaceObjectAtIndex:page + 2 withObject:[NSNull null]];
+//    }
+//    controller = [viewControllers_ objectAtIndex:page - 2];
+//    if (controller) {
+//        [viewControllers_ replaceObjectAtIndex:page - 2 withObject:[NSNull null]];
+//    }
+    
+//    if (!kControllers) {
+//        kControllers = [[NSMutableArray alloc] init];
+//    }
+//    [kControllers addObject:controller];
 }
 
 
@@ -286,9 +304,10 @@ static NSMutableArray *kControllers = nil;
 	//CGFloat pageWidth = scrollView.frame.size.width;
 //	int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     int page = [self currentPage];
-	[self loadScrollViewWithPage:page - 1];
+	//[self loadScrollViewWithPage:page - 1];
+
 	[self loadScrollViewWithPage:page];
-	[self loadScrollViewWithPage:page + 1];
+	//[self loadScrollViewWithPage:page + 1];
 	
 	self.currentPage = page;
     if (page < [_detailArray count]) {

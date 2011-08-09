@@ -81,11 +81,7 @@ static NSString *kCategory = nil;   //通知传过来的category
 
 - (void)imagePickerController:(ImageImporterController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *img = [info valueForKey:UIImagePickerControllerOriginalImage];
-    if (img.imageOrientation == UIImageOrientationLeft) {
-        CGAffineTransform t = CGAffineTransformMakeRotation(M_PI / 2);
-        
-    }
-    NSLog(@"ORITATION:%d", [img imageOrientation]);
+
     [picker.selectedImages addObject:img];
     
     

@@ -38,7 +38,7 @@
 - (void)main {
     UIImage *img = [UIImage imageWithContentsOfFile:_thumbnailPath];
     if (img == nil) {
-        img = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(_image.CGImage, CGRectMake(0, 0, 80, 80))];
+        //img = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(_image.CGImage, CGRectMake(0, 0, 80, 80))];
         img = [self scaleAndRotateImage:_image :THUMBNAIL_WIDTH :THUMBNAIL_HEIGHT];
         NSData *data = UIImagePNGRepresentation(img);
         [data writeToFile:_thumbnailPath atomically:YES];

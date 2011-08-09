@@ -16,11 +16,11 @@
 {
     self = [super init];
     if (self) {
-        iPictureViewController *iPicture1 = [[iPictureViewController alloc] init];
-        iPictureViewController *iPicture2 = [[iPictureViewController alloc] init];
-        iPictureViewController *iPicture3 = [[iPictureViewController alloc] init];
-        iPictureViewController *iPicture4 = [[iPictureViewController alloc] init];
-        iPictureSettingController *iPicture5 = [[iPictureSettingController alloc] init];
+        iPictureViewController *iPicture1 = [[[iPictureViewController alloc] init] autorelease];
+        iPictureViewController *iPicture2 = [[[iPictureViewController alloc] init] autorelease];
+        iPictureViewController *iPicture3 = [[[iPictureViewController alloc] init] autorelease];
+        iPictureViewController *iPicture4 = [[[iPictureViewController alloc] init] autorelease];
+        iPictureSettingController *iPicture5 = [[[iPictureSettingController alloc] init] autorelease];
         
         NSString *path = [[NSBundle mainBundle] pathForResource:@"RefData" ofType:@"plist"];
         NSDictionary *_listKey1 = [[NSDictionary alloc] initWithContentsOfFile:path];
@@ -43,6 +43,9 @@
         NSArray *array0 = [NSArray arrayWithObjects:iPicture1, iPicture2, iPicture3, iPicture4, iPicture5, nil];
         
         self.viewControllers = array0;
+        
+        [_listData1 release];
+        [_listKey1 release];
 
     }
     return self;
