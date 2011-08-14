@@ -49,11 +49,11 @@
 }
 
 - (void)launchImageImporter {
-    ImageImporterController *importer = [[ImageImporterController alloc] init];
+    ImageImporterController *importer = [[ImageImporterController alloc] initWithCamera:NO];
     importer.delegate = self;
     importer.dialogView.textField.text = _category;
     importer.dialogView.textField.userInteractionEnabled = NO;
-    
+    importer.isUsingCamera = NO;
     [self presentModalViewController:importer animated:YES];
     [importer release];
     
