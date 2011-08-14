@@ -22,20 +22,8 @@
 		4120C48513B4201600E8A553 /* iPictureRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120C48313B4201500E8A553 /* iPictureRootViewController.m */; };
 		4120C48613B4201600E8A553 /* iPictureRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4120C48413B4201600E8A553 /* iPictureRootViewController.xib */; };
 		4120C49013B421A500E8A553 /* pictureCategory.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4120C48F13B421A400E8A553 /* pictureCategory.plist */; };
-		4120C49713B4269F00E8A553 /* Business.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C49113B4269200E8A553 /* Business.png */; };
-		4120C49813B4269F00E8A553 /* Party.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C49213B4269300E8A553 /* Party.png */; };
-		4120C49913B4269F00E8A553 /* Relax.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C49313B4269400E8A553 /* Relax.png */; };
-		4120C49A13B4269F00E8A553 /* Sports.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C49413B4269600E8A553 /* Sports.png */; };
-		4120C49B13B4269F00E8A553 /* Family.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C49513B4269800E8A553 /* Family.png */; };
 		4120C4A313B42D4400E8A553 /* CategoryRootCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120C4A113B42D4200E8A553 /* CategoryRootCell.m */; };
 		4120C4A413B42D4400E8A553 /* CategoryRootCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4A213B42D4300E8A553 /* CategoryRootCell.xib */; };
-		4120C4AC13B42DC000E8A553 /* lightGrayBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4A513B42DC000E8A553 /* lightGrayBackground.png */; };
-		4120C4AD13B42DC000E8A553 /* grayBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4A613B42DC000E8A553 /* grayBackground.png */; };
-		4120C4AE13B42DC000E8A553 /* yellowBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4A713B42DC000E8A553 /* yellowBackground@2x.png */; };
-		4120C4AF13B42DC000E8A553 /* blueBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4A813B42DC000E8A553 /* blueBackground@2x.png */; };
-		4120C4B013B42DC000E8A553 /* blackboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4A913B42DC000E8A553 /* blackboard@2x.png */; };
-		4120C4B113B42DC000E8A553 /* DarkBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4AA13B42DC000E8A553 /* DarkBackground.png */; };
-		4120C4B213B42DC000E8A553 /* LightBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4AB13B42DC000E8A553 /* LightBackground.png */; };
 		4120C4BD13B4818900E8A553 /* DialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120C4BC13B4818900E8A553 /* DialogView.m */; };
 		4120C4BF13B4AC6900E8A553 /* DialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4BE13B4AC5900E8A553 /* DialogView.xib */; };
 		41665E8913AA5A0D00E73416 /* MyTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 41665E8813AA5A0B00E73416 /* MyTabbar.m */; };
@@ -98,21 +86,9 @@
 		4120C48313B4201500E8A553 /* iPictureRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPictureRootViewController.m; sourceTree = "<group>"; };
 		4120C48413B4201600E8A553 /* iPictureRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPictureRootViewController.xib; sourceTree = "<group>"; };
 		4120C48F13B421A400E8A553 /* pictureCategory.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = pictureCategory.plist; sourceTree = "<group>"; };
-		4120C49113B4269200E8A553 /* Business.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Business.png; sourceTree = "<group>"; };
-		4120C49213B4269300E8A553 /* Party.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Party.png; sourceTree = "<group>"; };
-		4120C49313B4269400E8A553 /* Relax.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Relax.png; sourceTree = "<group>"; };
-		4120C49413B4269600E8A553 /* Sports.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sports.png; sourceTree = "<group>"; };
-		4120C49513B4269800E8A553 /* Family.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Family.png; sourceTree = "<group>"; };
 		4120C4A013B42D4200E8A553 /* CategoryRootCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryRootCell.h; sourceTree = "<group>"; };
 		4120C4A113B42D4200E8A553 /* CategoryRootCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryRootCell.m; sourceTree = "<group>"; };
 		4120C4A213B42D4300E8A553 /* CategoryRootCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryRootCell.xib; sourceTree = "<group>"; };
-		4120C4A513B42DC000E8A553 /* lightGrayBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightGrayBackground.png; sourceTree = "<group>"; };
-		4120C4A613B42DC000E8A553 /* grayBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayBackground.png; sourceTree = "<group>"; };
-		4120C4A713B42DC000E8A553 /* yellowBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellowBackground@2x.png"; sourceTree = "<group>"; };
-		4120C4A813B42DC000E8A553 /* blueBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueBackground@2x.png"; sourceTree = "<group>"; };
-		4120C4A913B42DC000E8A553 /* blackboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackboard@2x.png"; sourceTree = "<group>"; };
-		4120C4AA13B42DC000E8A553 /* DarkBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DarkBackground.png; sourceTree = "<group>"; };
-		4120C4AB13B42DC000E8A553 /* LightBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LightBackground.png; sourceTree = "<group>"; };
 		4120C4BB13B4818900E8A553 /* DialogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogView.h; sourceTree = "<group>"; };
 		4120C4BC13B4818900E8A553 /* DialogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogView.m; sourceTree = "<group>"; };
 		4120C4BE13B4AC5900E8A553 /* DialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DialogView.xib; sourceTree = "<group>"; };
@@ -223,25 +199,6 @@
 			name = Resource;
 			sourceTree = "<group>";
 		};
-		4120C49D13B42B8100E8A553 /* image */ = {
-			isa = PBXGroup;
-			children = (
-				4120C4A513B42DC000E8A553 /* lightGrayBackground.png */,
-				4120C4A613B42DC000E8A553 /* grayBackground.png */,
-				4120C4A713B42DC000E8A553 /* yellowBackground@2x.png */,
-				4120C4A813B42DC000E8A553 /* blueBackground@2x.png */,
-				4120C4A913B42DC000E8A553 /* blackboard@2x.png */,
-				4120C4AA13B42DC000E8A553 /* DarkBackground.png */,
-				4120C4AB13B42DC000E8A553 /* LightBackground.png */,
-				4120C49113B4269200E8A553 /* Business.png */,
-				4120C49213B4269300E8A553 /* Party.png */,
-				4120C49313B4269400E8A553 /* Relax.png */,
-				4120C49413B4269600E8A553 /* Sports.png */,
-				4120C49513B4269800E8A553 /* Family.png */,
-			);
-			name = image;
-			sourceTree = "<group>";
-		};
 		4120C49E13B42C1700E8A553 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,7 +271,6 @@
 		41964530137768BD00FBB64D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4120C49D13B42B8100E8A553 /* image */,
 				41964531137768BD00FBB64D /* almondz-Info.plist */,
 				41964532137768BD00FBB64D /* InfoPlist.strings */,
 				41964535137768BD00FBB64D /* almondz-Prefix.pch */,
@@ -485,19 +441,7 @@
 				4120C47F13B4179F00E8A553 /* Overlay@2x.png in Resources */,
 				4120C48613B4201600E8A553 /* iPictureRootViewController.xib in Resources */,
 				4120C49013B421A500E8A553 /* pictureCategory.plist in Resources */,
-				4120C49713B4269F00E8A553 /* Business.png in Resources */,
-				4120C49813B4269F00E8A553 /* Party.png in Resources */,
-				4120C49913B4269F00E8A553 /* Relax.png in Resources */,
-				4120C49A13B4269F00E8A553 /* Sports.png in Resources */,
-				4120C49B13B4269F00E8A553 /* Family.png in Resources */,
 				4120C4A413B42D4400E8A553 /* CategoryRootCell.xib in Resources */,
-				4120C4AC13B42DC000E8A553 /* lightGrayBackground.png in Resources */,
-				4120C4AD13B42DC000E8A553 /* grayBackground.png in Resources */,
-				4120C4AE13B42DC000E8A553 /* yellowBackground@2x.png in Resources */,
-				4120C4AF13B42DC000E8A553 /* blueBackground@2x.png in Resources */,
-				4120C4B013B42DC000E8A553 /* blackboard@2x.png in Resources */,
-				4120C4B113B42DC000E8A553 /* DarkBackground.png in Resources */,
-				4120C4B213B42DC000E8A553 /* LightBackground.png in Resources */,
 				4120C4BF13B4AC6900E8A553 /* DialogView.xib in Resources */,
 				41BA459013B5FEBC00EA41B1 /* iPictureTabbarViewController.xib in Resources */,
 				A9C1629A13BCB40500F235F5 /* ToolView.xib in Resources */,
