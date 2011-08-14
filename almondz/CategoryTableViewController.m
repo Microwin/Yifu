@@ -65,6 +65,7 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationItem setTitle:@"分类管理"];
     if ([_categoryArray count] > 0) {
         [_categoryArray removeAllObjects];
@@ -90,6 +91,7 @@ static NSIndexPath *indexPathToDelete = nil;    //用于删除的行
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

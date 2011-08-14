@@ -42,6 +42,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     if (isRename) {
         [self.navigationItem setTitle:@"修改分类名"];
     }
