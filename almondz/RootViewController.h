@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AbstractScrollView.h"
+#import "ImageBrowseController.h"
+#import "CategoryButton.h"
 
 enum ImporterType {
     ImporterTypeNone,
@@ -14,11 +17,13 @@ enum ImporterType {
     ImporterTypeCamera,
 };
 
-@interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate>{
+@interface RootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CategoryButtonDelegate>{
     
     UITableView *tableView;
     
     NSMutableArray *_selectedImage;
+    AbstractScrollView *_categoryScrollView;
+    ImageBrowseController *_imageBrowseController;
     
 @private
     enum ImporterType imprterType;
@@ -27,6 +32,8 @@ enum ImporterType {
 
 @property (nonatomic, retain) NSMutableArray *selectedImage;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet AbstractScrollView *categoryScrollView;
+@property (nonatomic, retain) ImageBrowseController *imageBrowseController;
 - (IBAction)mangeButtonPressed:(id)sender;
 - (IBAction)photoButtonPressed:(id)sender;
 - (IBAction)inputButtonPressed:(id)sender;

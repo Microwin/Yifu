@@ -59,6 +59,9 @@
 		A98DB84613BD85140022FA22 /* CategoryEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DB84413BD85130022FA22 /* CategoryEditViewController.m */; };
 		A98DB84713BD85140022FA22 /* CategoryEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */; };
 		A98DB84913BD85360022FA22 /* CategoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98DB84813BD85360022FA22 /* CategoryTableCell.xib */; };
+		A99951DF13F7B7140036AB21 /* CategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A99951DE13F7B7140036AB21 /* CategoryButton.m */; };
+		A99951E313F7BA610036AB21 /* AbstractScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A99951E213F7BA610036AB21 /* AbstractScrollView.m */; };
+		A99951E513F7BE0F0036AB21 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = A99951E413F7BE0F0036AB21 /* add.png */; };
 		A99E513113D18AB800D01B5C /* ImageSavingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A99E513013D18AB800D01B5C /* ImageSavingOperation.m */; };
 		A9BE52FF13CDD82C0052D1B5 /* ImageImporterController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE52FE13CDD82C0052D1B5 /* ImageImporterController.m */; };
 		A9C1629813BCB14000F235F5 /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C1629713BCB14000F235F5 /* ToolView.m */; };
@@ -146,6 +149,11 @@
 		A98DB84413BD85130022FA22 /* CategoryEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryEditViewController.m; sourceTree = "<group>"; };
 		A98DB84513BD85130022FA22 /* CategoryEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryEditViewController.xib; sourceTree = "<group>"; };
 		A98DB84813BD85360022FA22 /* CategoryTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableCell.xib; sourceTree = "<group>"; };
+		A99951DD13F7B7140036AB21 /* CategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryButton.h; sourceTree = "<group>"; };
+		A99951DE13F7B7140036AB21 /* CategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryButton.m; sourceTree = "<group>"; };
+		A99951E113F7BA600036AB21 /* AbstractScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractScrollView.h; sourceTree = "<group>"; };
+		A99951E213F7BA610036AB21 /* AbstractScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractScrollView.m; sourceTree = "<group>"; };
+		A99951E413F7BE0F0036AB21 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		A99E512F13D18AB800D01B5C /* ImageSavingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageSavingOperation.h; sourceTree = "<group>"; };
 		A99E513013D18AB800D01B5C /* ImageSavingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageSavingOperation.m; sourceTree = "<group>"; };
 		A9BE52FD13CDD82C0052D1B5 /* ImageImporterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageImporterController.h; sourceTree = "<group>"; };
@@ -301,6 +309,10 @@
 				41176D1413F799000047D90C /* RootCell.h */,
 				41176D1513F799000047D90C /* RootCell.m */,
 				41176D1713F799290047D90C /* RootCell.xib */,
+				A99951DD13F7B7140036AB21 /* CategoryButton.h */,
+				A99951DE13F7B7140036AB21 /* CategoryButton.m */,
+				A99951E113F7BA600036AB21 /* AbstractScrollView.h */,
+				A99951E213F7BA610036AB21 /* AbstractScrollView.m */,
 			);
 			name = mainRootView;
 			sourceTree = "<group>";
@@ -308,6 +320,7 @@
 		4196459F137774D900FBB64D /* imageForApp */ = {
 			isa = PBXGroup;
 			children = (
+				A99951E413F7BE0F0036AB21 /* add.png */,
 				41964598137771E000FBB64D /* Default.png */,
 			);
 			name = imageForApp;
@@ -465,6 +478,7 @@
 				A98DB84913BD85360022FA22 /* CategoryTableCell.xib in Resources */,
 				41176D1213F795E80047D90C /* RootViewController.xib in Resources */,
 				41176D1813F799290047D90C /* RootCell.xib in Resources */,
+				A99951E513F7BE0F0036AB21 /* add.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +518,8 @@
 				A93FBA3813EE548A00E3F478 /* GenerateImageOperation.m in Sources */,
 				41176D1113F795E80047D90C /* RootViewController.m in Sources */,
 				41176D1613F799000047D90C /* RootCell.m in Sources */,
+				A99951DF13F7B7140036AB21 /* CategoryButton.m in Sources */,
+				A99951E313F7BA610036AB21 /* AbstractScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

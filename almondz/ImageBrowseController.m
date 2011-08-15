@@ -9,7 +9,7 @@
 #import "ImageBrowseController.h"
 #import "ImageScrollPageController.h"
 #import "GenerateThumbnailOperation.h"
-
+#import "RootViewController.h"
 #define MAX_DEAL_OPERATION 3
 
 @implementation ImageBrowseController
@@ -17,7 +17,7 @@
 @synthesize imageNames = imageNames_;
 @synthesize isCurrentPortrait = isCurrentPortrait_;
 @synthesize category = _category;
-
+@synthesize parent;
 #pragma mark -
 #pragma mark Initialization
 
@@ -120,6 +120,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     [self performSelectorInBackground:@selector(refreshImages) withObject:nil];
@@ -167,8 +168,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	DEBUG_LOG_NULL;
-	int itemsNumPerRow = self.isCurrentPortrait ? 4 : 6;
-
+	//int itemsNumPerRow = self.isCurrentPortrait ? 4 : 6;
+    int itemsNumPerRow = self.isCurrentPortrait ? 3 : 5;
     return [imageNames_ count] / itemsNumPerRow + 1;
 }
 
@@ -187,8 +188,9 @@
 
     // Configure the cell...
 	int i;
-	int itemsNumPerRow = self.isCurrentPortrait ? 4 : 6;
-	
+	//int itemsNumPerRow = self.isCurrentPortrait ? 4 : 6;
+	int itemsNumPerRow = self.isCurrentPortrait ? 3 : 5;
+    
 	if (1/*itemsNumPerRow != cell.subviews.count*/) {
 		DEBUG_LOG_VALUE(indexPath, %@);
 
@@ -206,8 +208,8 @@
             
 
             if (thumbnailImage) {
-                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(80*i, 0, 80, 80)];
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+                UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(96*i + (i+1)*8, 4, 96, 96)];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 96, 96)];
                 imageView.image = thumbnailImage;
                 imageView.contentMode = UIViewContentModeScaleAspectFit;
                 [button addSubview:imageView];
@@ -238,13 +240,14 @@
 	scrollController.browser = self;
     scrollController.category = _category;
 //	[[[[UIApplication sharedApplication] delegate] navigationController] pushViewController:scrollController animated:YES];
-    [self.navigationController pushViewController:scrollController animated:YES];
+    [parent.navigationController pushViewController:scrollController animated:YES];
+    //[self presentModalViewController:scrollController animated:YES];
     [scrollController release];
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 80.0f;
+	return 104.0f;
 }
 
 /*

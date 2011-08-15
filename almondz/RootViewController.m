@@ -15,6 +15,9 @@
 @implementation RootViewController
 @synthesize tableView;
 @synthesize selectedImage = _selectedImage;
+@synthesize categoryScrollView = _categoryScrollView;
+@synthesize imageBrowseController = _imageBrowseController;
+
 static NSString *kCategory = nil;
 
 #pragma mark storeFilefromselectedimage
@@ -38,6 +41,7 @@ static NSString *kCategory = nil;
 {
     [tableView release];
     [_selectedImage release];
+    [_categoryScrollView release];
     [super dealloc];
 }
 
@@ -132,6 +136,8 @@ static NSString *kCategory = nil;
     // Do any additional setup after loading the view from its nib.
     //注册为通知观察者
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCategory:) name:@"CategoryTyped" object:nil];
+    _categoryScrollView.parentController = self;
+    [_categoryScrollView LoadContents];
 }
 
 - (void)viewDidUnload
@@ -176,6 +182,16 @@ static NSString *kCategory = nil;
     return cell;
 }
 
+#pragma mark - CategoryButtonDelegate
 
+- (void)categoryButtonPressed:(NSString *)categoryName imageNamesArray:(NSMutableArray *)imageNamesArray {
+    ImageBrowseController *img = [[ImageBrowseController alloc] initWithImageNames:imageNamesArray];
+    img.category = categoryName;
+    img.parent = self;
+    img.tableView.frame = CGRectMake(0, 0, 320, 312);
+    [self.view addSubview:img.tableView];
+
+    
+}
 
 @end

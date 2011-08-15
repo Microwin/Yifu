@@ -16,12 +16,13 @@
     NSString *_category;
     
     NSOperationQueue *_dealImageQueue;
+    UIViewController *parent;
 }
 
 @property (nonatomic, retain) NSMutableArray *imageNames;
 @property (nonatomic, assign) BOOL isCurrentPortrait;
 @property (nonatomic, retain) NSString *category;
-
+@property (nonatomic, retain) UIViewController *parent;
 - (id)initWithImageNames:(NSMutableArray *)imageNames;
 
 @end
